@@ -1,0 +1,29 @@
+@import '../variables/variables';
+
+@import '../mixins/mixins';
+
+.acf-repeater {
+	.acf-row-handle {
+		.acf-icon {
+			&.-plus {
+				top:0;
+				left:-5px;
+			}
+			&.-copy {
+				top:100%;
+				top:0;
+				right:-5px;
+			}
+		}
+	}
+}
+
+.acf-icon {
+	&.-copy {
+		&:before {
+			margin-top:0.125em;
+			font-family:'dashicons';
+			content:$dashicon-admin-page;
+		}
+	}
+}

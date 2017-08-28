@@ -28,7 +28,7 @@ class Admin extends Core\Singleton {
 		if ( class_exists( 'acf' ) && function_exists( 'acf_get_field_groups' ) ) {
 
 			// enqueue assets
-			add_action( 'load-post.php' , array( $this, 'enqueue_assets' ) );
+			add_action( 'admin_enqueue_scripts' , array( $this, 'enqueue_assets' ) );
 
 		} else if ( class_exists( 'acf' ) && current_user_can( 'activate_plugins' ) ) {
 

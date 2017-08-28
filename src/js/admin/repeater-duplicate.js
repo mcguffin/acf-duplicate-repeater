@@ -6,6 +6,25 @@
 		events: {
 			'click a[data-event="duplicate-row"]': '_duplicate'
 		},
+		prepare_template: function( $el, $orig ) {
+			var $clone;
+
+			this.reset_ids( $el );
+
+			$clone_row = $orig.closest('.acf-table').find('tr.acf-clone');
+
+			$el.find('.acf-field-wysiwyg').each(function(){
+				var $textarea = $(this).find('.tmce-active textarea.wp-editor-area'),
+					rte_value = $textarea.html(),
+					$this_clone = $clone_row.find('[data-key="'+ $(this).attr('data-key') +'"]');
+
+				$(this).html( $this_clone.html() );
+
+				$(this).find('textarea.wp-editor-area').html( rte_value );
+				
+			});
+
+		},
 		reset_ids: function( $el ) {
 			var id = $el.attr('data-id'),
 				new_id = 'acfcloneindex',
@@ -34,24 +53,9 @@
 			$el.find('textarea.wp-editor-area').each(function(){
 				$(this).attr( 'id', 'acf-editor-' + acf.get_uniqid() );
 			});
-			
 		},
 		_duplicate: function( e ) {
-			/*
-			var $original = e.$el.closest('.acf-row'),
-				$copy,
-				findValue = function( key ) {
-				
-				};
-			
-			$copy = this.add( $original );
 
-			$copy.find('.acf-field').each(function(){
-				var field;
-//				field = acf.fields[ $(this).attr('data-type') ].extend( { $field: $(this) } );
-			});
-
-			/*/
 			var $prev_clone, 
 				id, uniquid,
 				$row, 
@@ -60,20 +64,18 @@
 			// vars
 			
 			
-			// row add
+			// add before row
 			if( e.$el.hasClass('acf-icon') ) {
-			
 				$row = e.$el.closest('.acf-row');
-				
 			}
 
 			// backup acf clone options
 			$prev_clone = this.$clone;
 
 			$template = $row.clone();
-			$tmp = $('<table />').appendTo('body').append($template)
+			$tmp = $('<table />').appendTo('body').append( $template );
 
-			this.reset_ids( $template );
+			this.prepare_template( $template, $row );
 
 			// fake acf.clone() current row
 			this.$clone = {
@@ -91,7 +93,7 @@
 
 			// restore acf clone options
 			this.$clone = $prev_clone;
-//			$tmp.remove();
+			$tmp.remove();
 
 			// init fields
 			//*/

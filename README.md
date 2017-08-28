@@ -21,4 +21,4 @@ followed by `gulp`.
 
 ToDo:
 -----
- - [ ] Support Layout field
+ - [ ] Test Layout & Repeater with all fields

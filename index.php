@@ -5,7 +5,7 @@ Plugin Name: ACF Duplicate Repeater
 Plugin URI: http://wordpress.org/
 Description: Enter description here.
 Author: Jörn Lund
-Version: 0.1.0-beta
+Version: 0.1.1-beta
 Author URI: 
 License: GPL3
 
@@ -50,18 +50,7 @@ Core\Core::instance();
 
 if ( is_admin() || defined( 'DOING_AJAX' ) ) {
 
-
-
 	Admin\Admin::instance();
-/*
-	Admin\Tools::instance();
-	Admin\Settings::instance();
 
-	// Compatibility plugins
-	$compat = glob(plugin_dir_path(__FILE__) . 'include/compat/*.php');
-	foreach ( $compat as $compat_file ) {
-		require_once $compat_file;
-	}
-*/
 }
 

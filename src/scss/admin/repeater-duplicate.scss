@@ -36,3 +36,25 @@
 		}
 	}
 }
+
+
+.acf-flexible-content {
+	.layout {
+		.acf-fc-layout-controlls {
+			.acf-icon {
+				&.-copy {
+					visibility:hidden;
+				}
+			}
+		}
+		&:hover {
+			.acf-fc-layout-controlls {
+				.acf-icon {
+					&.-copy {
+						visibility:visible;
+					}
+				}
+			}
+		}
+	}
+}

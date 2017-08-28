@@ -69,9 +69,13 @@ class Admin extends Core\Singleton {
 		wp_enqueue_script( 'acf-repeater-duplicate-admin' , $this->core->get_asset_url( 'js/admin/repeater-duplicate.js' ), array('acf-pro-input') );
 		wp_localize_script('acf-repeater-duplicate-admin' , 'acf_duplicate_repeater' , array(
 			'options'	=> array(
-				'duplicate_btn'	=> sprintf(
+				'duplicate_repeater_btn' => sprintf(
 					'<a class="acf-icon -copy small acf-js-tooltip" href="#" data-event="duplicate-row" title="%s"></a>',
 					__('Duplicate Entry', 'acf-duplicate-repeater' )
+					),
+				'duplicate_flexible_btn' => sprintf(
+					'<a class="acf-icon -copy small light acf-js-tooltip" href="#" data-name="duplicate-layout" title="%s"></a>',
+					__('Duplicate Layout', 'acf-duplicate-repeater' )
 					),
 			),
 			'l10n'		=> array(

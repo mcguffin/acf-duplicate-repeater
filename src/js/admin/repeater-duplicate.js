@@ -6,13 +6,57 @@
 		events: {
 			'click a[data-event="duplicate-row"]': '_duplicate'
 		},
+		reset_ids: function( $el ) {
+			var id = $el.attr('data-id'),
+				new_id = 'acfcloneindex',
+				search_id		= '-'+id+'-',
+				replace_id		= '-'+new_id+'-',
+				search_name 	= '['+id+']',
+				replace_name	= '['+new_id+']';
+
+			$el.attr('data-id', new_id );
+
+			// replace ids
+			$el.find('[id*="' + id + '"]').each(function(){	
+				$(this).attr('id', $(this).attr('id').replace( search_id, replace_id ) );
+			});
+	
+			// replace names
+			$el.find('[name*="' + id + '"]').each(function(){	
+				$(this).attr('name', $(this).attr('name').replace( search_name, replace_name ) );
+			});
+	
+			// replace label for
+			$el.find('label[for*="' + id + '"]').each(function(){
+				$(this).attr('for', $(this).attr('for').replace( search_id, replace_id ) );
+			});
+
+			$el.find('textarea.wp-editor-area').each(function(){
+				$(this).attr( 'id', 'acf-editor-' + acf.get_uniqid() );
+			});
+			
+		},
 		_duplicate: function( e ) {
+			/*
+			var $original = e.$el.closest('.acf-row'),
+				$copy,
+				findValue = function( key ) {
+				
+				};
+			
+			$copy = this.add( $original );
+
+			$copy.find('.acf-field').each(function(){
+				var field;
+//				field = acf.fields[ $(this).attr('data-type') ].extend( { $field: $(this) } );
+			});
+
+			/*/
 			var $prev_clone, 
 				id, uniquid,
-				$row = false, 
-				$copy,
-				search_id, replace_id,
-				search_name, replace_name;
+				$row, 
+				$template, $tmp,
+				$copy;
 			// vars
 			
 			
@@ -26,56 +70,41 @@
 			// backup acf clone options
 			$prev_clone = this.$clone;
 
-			// setup search/replace
-			id				= $row.attr('data-id');
-			uniquid			= acf.get_uniqid();
-			search_id		= '-'+id+'-';
-			replace_id		= '-'+uniquid+'-';
-			search_name 	= '['+id+']';
-			replace_name	= '['+uniquid+']';
+			$template = $row.clone();
+			$tmp = $('<table />').appendTo('body').append($template)
+
+			this.reset_ids( $template );
 
 			// fake acf.clone() current row
 			this.$clone = {
-				'$el'		: $row,
-				'search'	: '__none__',
-				'replace'	: '__none__',
+				'$el'		: $template,
+				'search'	: 'acfcloneindex',
+				'replace'	: false,
 			};
 
+			$row.find('.acf-field-wysiwyg').each(function( i, el ) {
+				var $field = $(this);
+			});
 
 			// make copy
 			$copy = this.add( $row );
 
-			// setup $copy
-			$copy.attr('data-id', uniquid );
-				
-			// replace ids
-			$copy.find('[id*="' + id + '"]').each(function(){	
-				$(this).attr('id', $(this).attr('id').replace( search_id, replace_id ) );
-			});
-			
-			// replace names
-			$copy.find('[name*="' + id + '"]').each(function(){	
-				$(this).attr('name', $(this).attr('name').replace( search_name, replace_name ) );
-			});
-			
-			// replace label for
-			$copy.find('label[for*="' + id + '"]').each(function(){
-				$(this).attr('for', $(this).attr('for').replace( search_id, replace_id ) );
-			});
-
 			// restore acf clone options
 			this.$clone = $prev_clone;
-			
+//			$tmp.remove();
+
+			// init fields
+			//*/
 			// give the copy back
 			return $copy;
 
 		},
 
-		initialize: function() {
+		render: function() {
 
 			var ret;
 
-			ret = orig_repeater.initialize.apply(this,arguments);
+			ret = orig_repeater.render.apply( this, arguments );
 
 			// update order numbers
 			this.$tbody.children().each(function(i){

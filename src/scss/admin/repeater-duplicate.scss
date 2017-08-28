@@ -27,3 +27,12 @@
 		}
 	}
 }
+
+
+.acf-row {
+	&.copy {
+		> * {
+			font-style:italic !important;
+		}
+	}
+}

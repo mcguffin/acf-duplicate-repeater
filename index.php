@@ -6,9 +6,9 @@ Plugin URI: http://wordpress.org/
 Description: Enter description here.
 Author: Jörn Lund
 Version: 0.1.1-beta
-Author URI: 
+Author URI:
 License: GPL3
-
+Github Repository: mcguffin/acf-duplicate-repeater
 Text Domain: acf-duplicate-repeater
 Domain Path: /languages/
 */
@@ -16,7 +16,7 @@ Domain Path: /languages/
 /*  Copyright 2017  Jörn Lund
 
     This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License, version 2, as 
+    it under the terms of the GNU General Public License, version 2, as
     published by the Free Software Foundation.
 
     This program is distributed in the hope that it will be useful,
@@ -50,7 +50,11 @@ Core\Core::instance();
 
 if ( is_admin() || defined( 'DOING_AJAX' ) ) {
 
+	// don't WP-Update actual repos!
+	if ( ! file_exists( ACFQUICKEDIT_DIRECTORY . '/.git/' ) ) {
+		AutoUpdate\AutoUpdateGithub::instance();
+	}
+
 	Admin\Admin::instance();
 
 }
-

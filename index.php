@@ -5,7 +5,7 @@ Plugin Name: ACF Duplicate Repeater
 Plugin URI: http://wordpress.org/
 Description: Enter description here.
 Author: Jörn Lund
-Version: 0.1.1-beta
+Version: 0.1.3
 Author URI:
 License: GPL3
 Github Repository: mcguffin/acf-duplicate-repeater

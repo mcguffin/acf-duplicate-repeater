@@ -12,7 +12,7 @@ Requires at least PHP 5.3.
 
 Installation
 ------------
- - Head over to the releases tab
+ - Head over to [releases](../../releases)
  - Download 'acf-duplicate-repeater.zip'
  - Install and activate it like any other WordPress plugin
  - As long as the plugin is active, it will check for updates

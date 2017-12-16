@@ -51,7 +51,7 @@ Core\Core::instance();
 if ( is_admin() || defined( 'DOING_AJAX' ) ) {
 
 	// don't WP-Update actual repos!
-	if ( ! file_exists( ACFQUICKEDIT_DIRECTORY . '/.git/' ) ) {
+	if ( ! file_exists( ACF_DUPLICATE_REPEATER_DIRECTORY . '/.git/' ) ) {
 		AutoUpdate\AutoUpdateGithub::instance();
 	}
 

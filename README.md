@@ -10,6 +10,13 @@ Coded with WP 4.8 and ACF Pro 5.6.1
 
 Requires at least PHP 5.3.
 
+Installation
+------------
+ - Head over to the releases tab
+ - Download 'acf-duplicate-repeater.zip'
+ - Install and activate it like any other WordPress plugin
+ - As long as the plugin is active, it will check for updates
+
 Developing
 ----------
 This plugin uses gulp.

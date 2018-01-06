@@ -17,6 +17,16 @@ Installation
  - Install and activate it like any other WordPress plugin
  - As long as the plugin is active, it will check for updates
 
+Pull Requests Welcome
+---------------------
+This plugin is mainly to be used in my client projects. It is published in the hope that it may be useful to others. 
+At this time I want to keep the maintenance profile low. 
+I will do bugfixing and adding new features is only according to the particular needs of my clients.
+
+So please understand, that I can not resond to each of your issues. 
+
+Anyway, if you are able to fix an issue or add a cool new feature, your pull request is more than welcome!
+
 Developing
 ----------
 This plugin uses gulp.

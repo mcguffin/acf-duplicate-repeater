@@ -132,7 +132,10 @@
 				id, uniquid,
 				$row,
 				$template, $tmp,
-				$copy;
+				$copy,
+
+				selectedValue,
+				editorContent;
 			// vars
 
 
@@ -160,7 +163,7 @@
 
 			// get selection-field values, because these aren't copied by default
 			// see: https://api.jquery.com/clone/#entry-longdesc
-			var selectedValue = {};
+			selectedValue = {};
 			$row.find('select').each(function(index) {
 				selectedValue[index] = $(this).val();
 			});
@@ -171,9 +174,9 @@
 
 			// get wysiwyg-field values, because these aren't copied by default
 			// see: https://api.jquery.com/clone/#entry-longdesc
-			var $editorContent = {};
+			editorContent = {};
 			$row.find('.acf-field-wysiwyg iframe').contents().find("body").each(function(index) {
-				$editorContent[index] = $(this).html();
+				editorContent[index] = $(this).html();
 			});
 
 			// make copy
@@ -190,7 +193,7 @@
 
 			// restore WYSIWYG editor contents
 			$copy.find('.acf-field-wysiwyg textarea').each(function(index) {
-				$(this).html($editorContent[index]);
+				$(this).html(editorContent[index]);
 			});
 
 			// init fields

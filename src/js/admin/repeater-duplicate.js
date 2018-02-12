@@ -15,12 +15,12 @@
 		$el.attr('data-id', new_id );
 
 		// replace ids
-		$el.find('[id*="' + id + '"]').each(function(){	
+		$el.find('[id*="' + id + '"]').each(function(){
 			$(this).attr('id', $(this).attr('id').replace( search_id, replace_id ) );
 		});
 
 		// replace names
-		$el.find('[name*="' + id + '"]').each(function(){	
+		$el.find('[name*="' + id + '"]').each(function(){
 			$(this).attr('name', $(this).attr('name').replace( search_name, replace_name ) );
 		});
 
@@ -53,14 +53,14 @@
 			var $input = $(this).find('[type="hidden"]'),
 				color_value = $input.val(),
 				$this_clone = $clone_template.find('[data-key="'+ $(this).attr('data-key') +'"]');
-			
+
 			$(this).html( $this_clone.html() );
 
 			$(this).find('[type="hidden"]').val( color_value ).next().val( color_value );
 
 		});
 	}
-	
+
 
 	acf.fields.flexible_content = acf.fields.flexible_content.extend({
 		events: {
@@ -81,8 +81,8 @@
 		},
 		_duplicate: function( e ) {
 			var layout,
-				$before, 
-				$clone, 
+				$before,
+				$clone,
 				$layout_template;
 
 			$before = e.$el.closest('.layout');
@@ -128,14 +128,14 @@
 
 		_duplicate: function( e ) {
 
-			var $prev_clone, 
+			var $prev_clone,
 				id, uniquid,
-				$row, 
+				$row,
 				$template, $tmp,
 				$copy;
 			// vars
-			
-			
+
+
 			// add before row
 			if( e.$el.hasClass('acf-icon') ) {
 				$row = e.$el.closest('.acf-row');
@@ -158,8 +158,22 @@
 				'replace'	: false,
 			};
 
+			// get selection-field values, because these aren't copied by default
+			// see: https://api.jquery.com/clone/#entry-longdesc
+			var selectedValue = {};
+			$row.find('select').each(function(index) {
+				selectedValue[index] = $(this).val();
+			});
+
 			$row.find('.acf-field-wysiwyg').each(function( i, el ) {
 				var $field = $(this);
+			});
+
+			// get wysiwyg-field values, because these aren't copied by default
+			// see: https://api.jquery.com/clone/#entry-longdesc
+			var $editorContent = {};
+			$row.find('.acf-field-wysiwyg iframe').contents().find("body").each(function(index) {
+				$editorContent[index] = $(this).html();
 			});
 
 			// make copy
@@ -169,6 +183,16 @@
 			this.$clone = $prev_clone;
 			$tmp.remove();
 
+			// restore selection values
+			$copy.find('select').each(function(index) {
+				$(this).find("option[value = '" + selectedValue[index] + "']").attr("selected", "selected");
+			});
+
+			// restore WYSIWYG editor contents
+			$copy.find('.acf-field-wysiwyg textarea').each(function(index) {
+				$(this).html($editorContent[index]);
+			});
+
 			// init fields
 			//*/
 			// give the copy back
@@ -176,6 +200,6 @@
 
 		},
 	});
-	
+
 
 })(jQuery)

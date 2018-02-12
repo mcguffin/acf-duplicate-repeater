@@ -4,16 +4,31 @@
 		orig_flexible_content = $.extend( {}, acf.fields.flexible_content );
 
 
-	function reset_ids( $el ) {
-		var id = $el.attr('data-id'),
-			new_id = 'acfcloneindex',
-			search_id		= '-'+id+'-',
-			replace_id		= '-'+new_id+'-',
-			search_name 	= '['+id+']',
-			replace_name	= '['+new_id+']';
+	function reset_ids( $el, $tpl ) {
+		//*
+		var cloneName = $tpl.find('[name]').first().attr('name'),
+			elName = $el.find('[name]').first().attr('name'),
+			commonPrefix = '',
+			id, new_id,
+			search_id, replace_id,
+			search_name, replace_name;
+
+		for ( i=0;i<cloneName.length; i++ ) {
+			if ( cloneName[i] !== elName[i] ) {
+				break;
+			}
+			commonPrefix += cloneName[i];
+		}
+
+		//*/
+		id = $el.attr('data-id');
+		new_id = 'acfcloneindex';
+		search_id		= '-'+id+'-';
+		replace_id		= '-'+new_id+'-';
+		search_name 	= commonPrefix + id + ']';
+		replace_name	= commonPrefix + new_id + ']';
 
 		$el.attr('data-id', new_id );
-
 		// replace ids
 		$el.find('[id*="' + id + '"]').each(function(){
 			$(this).attr('id', $(this).attr('id').replace( search_id, replace_id ) );
@@ -28,10 +43,24 @@
 		$el.find('label[for*="' + id + '"]').each(function(){
 			$(this).attr('for', $(this).attr('for').replace( search_id, replace_id ) );
 		});
-
+		//*/
 		$el.find('textarea.wp-editor-area').each(function(){
 			$(this).attr( 'id', 'acf-editor-' + acf.get_uniqid() );
 		});
+
+
+		/*
+		DUPLICATE:
+		<input type="text" id="acf-field_5a2db82264f99-5a81bbc210e09-field_5a2db83264f9a-0-field_5a2db963a7c61" name="acf[field_5a2db82264f99][5a81bbc210e09][field_5a2db83264f9a][0][field_5a2db963a7c61]" placeholder="00:00" maxlength="5">
+
+		NEW:
+		<input type="text" id="acf-field_5a2db82264f99-0-field_5a2db83264f9a-5a81bcb610e0a-field_5a2db963a7c61" name="acf[field_5a2db82264f99][0][field_5a2db83264f9a][5a81bcb610e0a][field_5a2db963a7c61]" placeholder="00:00" maxlength="5">
+
+		CLONEINDEX
+		<input name="acf[field_5a2db82264f99][0][field_5a2db83264f9a][acfcloneindex][field_5a2db84364f9b]" type="hidden" disabled="">
+		*/
+
+
 	}
 
 	function reset_fields( $el, $clone_template ) {
@@ -150,7 +179,8 @@
 			$template = $row.clone();
 			$tmp = $('<table />').appendTo('body').append( $template );
 
-			reset_ids( $template );
+			reset_ids( $template, $row.siblings('[data-id="acfcloneindex"]').first() );
+
 
 			reset_fields( $template, $row.closest('.acf-table').find('tr.acf-clone') );
 

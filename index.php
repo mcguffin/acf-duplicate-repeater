@@ -13,7 +13,7 @@ Text Domain: acf-duplicate-repeater
 Domain Path: /languages/
 */
 
-/*  Copyright 2017  Jörn Lund
+/*  Copyright 2018  Jörn Lund
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as

@@ -44,16 +44,16 @@ class Admin extends Core\Singleton {
 	function print_acf_free_notice() {
 		?>
 		<div class="notice notice-error is-dismissible">
-			<p><?php 
-				printf( 
-					_x( 'The ACF QuickEdit Fields plugin only provies support for <a href="%1$s">ACF Pro</a>. You can disable and uninstall it on the <a href="%2$s">plugins page</a>.', 
+			<p><?php
+				printf(
+					_x( 'The ACF Duplicate Repeater plugin only provies support for <a href="%1$s">ACF Pro</a>. You can disable and uninstall it on the <a href="%2$s">plugins page</a>.', 
 						'1: ACF Pro URL, 2: plugins page url',
-						'acf-quick-edit-fields' 
+						'acf-quick-edit-fields'
 					),
 					'http://www.advancedcustomfields.com/pro/',
 					admin_url('plugins.php' )
-					
-				); 
+
+				);
 			?></p>
 		</div>
 		<?php
@@ -92,4 +92,3 @@ class Admin extends Core\Singleton {
 
 
 }
-

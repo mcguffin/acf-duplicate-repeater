@@ -1,96 +1,253 @@
 (function($){
 	var options = acf_duplicate_repeater.options,
+
 		orig_repeater = $.extend( {}, acf.fields.repeater ),
-		orig_flexible_content = $.extend( {}, acf.fields.flexible_content );
+		orig_flexible_content = $.extend( {}, acf.fields.flexible_content ),
 
+		/**
+		 *	value copy callbacks
+		 */
+		copy_value_cb = {
+		_default: function( $src, $dest, type ) { // OKAY
+			var $srces = $src.find('[type="'+type+'"]');
+			$dest.find('[type="'+type+'"]').each(function(i,el){
+				$(this).val( $( $srces[i] ).val() );
+			});
 
-	function reset_ids( $el, $tpl ) {
-		//*
-		var cloneName = $tpl.find('[name]').first().attr('name'),
-			elName = $el.find('[name]').first().attr('name'),
-			commonPrefix = '',
-			id, new_id,
-			search_id, replace_id,
-			search_name, replace_name;
+		},
+		button_group: function( $src, $dest ) { // OKAY
+			var $destRadio = $dest.find('[type="radio"]');
+			$src.find('[type="radio"]').each( function(i,el) {
+				if ( $(el).prop('checked') ) {
+					$( $destRadio[i] ).trigger('click' );
+					return false;
+				}
+			});
+		},
+		checkbox: function( $src, $dest ) { // OKAY
+			var $destCB = $dest.find('[type="checkbox"]');
+			$src.find('[type="checkbox"]').each( function(i,el) {
+				$( $destCB[i] ).prop('checked', $(el).prop('checked') );
+			});
+		},
+		color_picker: function( $src, $dest ) { // OKAY
+			copy_value_cb['_default']($src, $dest, 'text' );
+			copy_value_cb['_default']($src, $dest, 'hidden' );
+		},
+		date_picker: function( $src, $dest ) { // OKAY
+			copy_value_cb['_default']($src, $dest, 'text' );
+			copy_value_cb['_default']($src, $dest, 'hidden' );
+		},
+		date_time_picker: function( $src, $dest ) { // OKAY
+			copy_value_cb['_default']($src, $dest, 'text' );
+			copy_value_cb['_default']($src, $dest, 'hidden' );
+		},
+		file: function( $src, $dest ) { // OKAY
+			var $srcUpl = $src.find('.acf-file-uploader'),
+				$destUpl = $dest.find('.acf-file-uploader');
 
-		for ( i=0;i<cloneName.length; i++ ) {
-			if ( cloneName[i] !== elName[i] ) {
-				break;
+			// set hidden
+			copy_value_cb['_default']( $src, $dest, 'hidden' );
+
+			if ( $srcUpl.hasClass('has-value') ) {
+				$destUpl.find('div').first().html( $srcUpl.find('div').first().html() );
+				$dest.find('.acf-file-uploader').addClass('has-value')
 			}
-			commonPrefix += cloneName[i];
+		},
+		flexible_content: function( $src, $dest ) {
+			var selector = '> .acf-input > .acf-flexible-content > .values > .layout';
+			acf.fields.flexible_content.set( '$field', $dest );
+
+			$src.find( selector ).each(function(i,layout){
+				// each repeater entry... find fields in repeater entry
+				var $layout = $(layout),
+					$new_layout;
+
+				acf.fields.flexible_content.add( $layout.data('layout') );
+
+				$new_layout = $dest.find( selector ).last();
+
+				// tbl + block + row
+				copy_values( $(layout), $new_layout, '> .acf-table > tbody > .acf-row > .acf-field, > .acf-fields > .acf-field' ); // exclude clones!
+
+			}); // table
+		},
+		gallery: function( $src, $dest ) { // OKAY
+			// copy_value_cb['_default']($src, $dest, 'hidden' );
+			var $srcList = $src.find('.acf-gallery-attachments'),
+				$destList = $dest.find('.acf-gallery-attachments'),
+				$input = $dest.find('input[type="hidden"]'),
+				name = $input.attr('name') + '[]';
+
+			$srcList.children().each(function(i,el){
+				$clone = $(el).clone();
+				$clone.find('[type="hidden"]').attr( 'name', name );
+				$destList.append($clone);
+			});
+		},
+		google_map: function( $src, $dest ) { // OKAY
+			copy_value_cb['_default']($src, $dest, 'hidden' );
+		},
+		group: function( $src, $dest ) {
+			copy_values( $src, $dest, '> .acf-input > .acf-table > tbody > .acf-row > .acf-field, > .acf-input > .acf-fields > .acf-field' ); // exclude clones!
+		},
+		image: function( $src, $dest ) { // OKAY
+			// set hidden
+			copy_value_cb['_default']( $src, $dest, 'hidden' );
+			$dest.find('img').attr('src', $src.find('img').attr('src') )
+			if ( $src.find('.acf-image-uploader').hasClass('has-value') ) {
+				$dest.find('.acf-image-uploader').addClass('has-value')
+			}
+		},
+		link: function( $src, $dest ) { // OKAY
+			var $srcNode = $src.find('.link-node'),
+				$destNode = $dest.find('.link-node');
+
+			$destNode.html( $srcNode.html() );
+			$destNode.attr( 'href', $srcNode.attr( 'href' ) );
+			$destNode.attr( 'target', $srcNode.attr( 'target' ) );
+
+			$destNode.trigger('change');
+		},
+		oembed: function( $src, $dest ) { // OKAY
+			$dest.find('[data-name="search-input"]')
+				.val( $src.find('[type="hidden"]').val() )
+				.trigger('blur');
+		},
+		post_object: function( $src, $dest ) { // OKAY
+			copy_value_cb['select']($src, $dest );
+		},
+		radio: function( $src, $dest ) { // OKAY
+			copy_value_cb['button_group']($src, $dest);
+			copy_value_cb['_default']($src, $dest,'text');
+		},
+		range: function( $src, $dest ) { // OKAY
+			copy_value_cb['_default']($src, $dest,'range');
+			copy_value_cb['_default']($src, $dest,'number');
+		},
+		relationship: function( $src, $dest ) { // OKAY
+			var $destList = $dest.find('.values > .list'),
+				$input = $dest.find('.acf-relationship').children('input[type="hidden"]'),
+				name = $input.attr('name') + '[]';
+
+			$src.find('.values > .list').children().each(function(i,el){
+				var $clone = $(el).clone();
+				$clone.find('[type="hidden"]').attr( 'name', name );
+				$destList.append($clone);
+			});
+			$input.trigger('change');
+		},
+		repeater:function( $src, $dest ) {
+
+			acf.fields.repeater.set( '$field', $dest );
+			$src.find('> .acf-input > .acf-repeater > .acf-table > tbody > .acf-row:not(.acf-clone)').each(function(i,row){
+				// each repeater entry... find fields in repeater entry
+				var $new_row = acf.fields.repeater.add();
+
+				copy_values( $(row), $new_row, '> .acf-field, > .acf-fields > .acf-field' ); // exclude clones!
+			}); // table
+		},
+		select: function( $src, $dest, _selector ) { // OKAY
+			_selector = _selector || ' > .acf-input > select';
+			var $srcSelect = $src.find( _selector ),
+				$destSelect = $dest.find( _selector );
+
+			if ( $srcSelect.data('ui') * 1 ) {
+				// sort $dest like $src
+				$destSelect.html('');
+				$srcSelect.find('option').each(function(i,el){
+					$destSelect.append($(el).clone());
+				});
+			}
+			$destOpts = $destSelect.find('option');
+			$srcSelect.find('option').each(function(i,el) {
+				$( $destOpts[i] ).prop('selected', $(el).prop('selected') );
+			});
+		},
+		taxonomy: function( $src, $dest ) { // OKAY
+			copy_value_cb['radio']($src, $dest);
+			copy_value_cb['checkbox']($src, $dest);
+			copy_value_cb['select']($src, $dest, '> .acf-input > .acf-taxonomy-field > select' );
+		},
+		textarea: function( $src, $dest ) { // OKAY
+			$dest.find('textarea').val( $src.find('textarea').val() );
+		},
+		time_picker: function( $src, $dest ) { // OKAY
+			copy_value_cb['_default']($src, $dest, 'text' );
+			copy_value_cb['_default']($src, $dest, 'hidden' );
+		},
+		true_false: function( $src, $dest ) { // OKAY
+			$dest.find('[type="checkbox"]').prop('checked', $src.find('[type="checkbox"]').prop('checked') );
+			$dest.find('[type="checkbox"]').trigger('change');
+		},
+		user: function( $src, $dest ) { // OKAY
+			copy_value_cb['select']( $src, $dest );
+		},
+		wysiwyg: function( $src, $dest ) { // ...
+			var init_cb = function( ed, id, init, $field ) {
+				if ( $field.get(0) === $dest.get(0) ) {
+					var srcEd = tinymce.get( $src.find('textarea').attr('id') );
+					if ( srcEd ) {
+						ed.setContent( srcEd.getContent() );
+					}
+				//	acf.remove_action('wysiwyg_tinymce_init', init_cb ); // mhmmmm
+				}
+			};
+			acf.add_action('wysiwyg_tinymce_init', init_cb );
+
+			$dest.find('textarea').html( $src.find('textarea').html() );
+		},
+	};
+
+	/**
+	 *	Copy values from one acf-field to another
+	 *
+	 *	@param $src jQuery object holding the .acf-field object to copy from
+	 *	@param $dest jQuery object holding the .acf-field object to copy to
+	 */
+	function copy_value( $src, $dest ) {
+		var $srcInput, $destInput, type;
+
+		type = $src.attr('data-type');
+
+		if ( ! copy_value_cb[ type ] ) {
+			// tet, range, url, number,
+			return copy_value_cb._default( $src, $dest, type );
 		}
 
-		//*/
-		id = $el.attr('data-id');
-		new_id = 'acfcloneindex';
-		search_id		= '-'+id+'-';
-		replace_id		= '-'+new_id+'-';
-		search_name 	= commonPrefix + id + ']';
-		replace_name	= commonPrefix + new_id + ']';
-
-		$el.attr('data-id', new_id );
-		// replace ids
-		$el.find('[id*="' + id + '"]').each(function(){
-			$(this).attr('id', $(this).attr('id').replace( search_id, replace_id ) );
-		});
-
-		// replace names
-		$el.find('[name*="' + id + '"]').each(function(){
-			$(this).attr('name', $(this).attr('name').replace( search_name, replace_name ) );
-		});
-
-		// replace label for
-		$el.find('label[for*="' + id + '"]').each(function(){
-			$(this).attr('for', $(this).attr('for').replace( search_id, replace_id ) );
-		});
-		//*/
-		$el.find('textarea.wp-editor-area').each(function(){
-			$(this).attr( 'id', 'acf-editor-' + acf.get_uniqid() );
-		});
-
-
-		/*
-		DUPLICATE:
-		<input type="text" id="acf-field_5a2db82264f99-5a81bbc210e09-field_5a2db83264f9a-0-field_5a2db963a7c61" name="acf[field_5a2db82264f99][5a81bbc210e09][field_5a2db83264f9a][0][field_5a2db963a7c61]" placeholder="00:00" maxlength="5">
-
-		NEW:
-		<input type="text" id="acf-field_5a2db82264f99-0-field_5a2db83264f9a-5a81bcb610e0a-field_5a2db963a7c61" name="acf[field_5a2db82264f99][0][field_5a2db83264f9a][5a81bcb610e0a][field_5a2db963a7c61]" placeholder="00:00" maxlength="5">
-
-		CLONEINDEX
-		<input name="acf[field_5a2db82264f99][0][field_5a2db83264f9a][acfcloneindex][field_5a2db84364f9b]" type="hidden" disabled="">
-		*/
-
-
+		return copy_value_cb[type]( $src, $dest );
 	}
 
-	function reset_fields( $el, $clone_template ) {
+	/**
+	 *	Copy values from one set of acf-fields to another.
+	 *	It is assumed that both $src adn $dest have an identical
+	 *
+	 *	@param $src jQuery object containing the .acf-field objects to copy from
+	 *	@param $dest jQuery object containing the .acf-field object to copy to
+	 *	@param _selector css selector to select .acf-fields in both $src and $dest
+	 */
+	function copy_values( $src, $dest, _selector ) {
+		var field_map	= {},
+			_selector = _selector || '> .acf-field, > .acf-fields > .acf-field',
+			$sources	= $src.find( _selector ),
+			$dests		= $dest.find( _selector );
 
-		// rich text editor
-		$el.find('.acf-field-wysiwyg').each(function(){
-			var $textarea = $(this).find('.tmce-active textarea.wp-editor-area'),
-				rte_value = $textarea.html(),
-				$this_clone = $clone_template.find('[data-key="'+ $(this).attr('data-key') +'"]');
-
-			$(this).html( $this_clone.html() );
-
-			$(this).find('textarea.wp-editor-area').html( rte_value );
-
-		});
-
-		// color picker
-		$el.find('.acf-field-color-picker').each(function(){
-			var $input = $(this).find('[type="hidden"]'),
-				color_value = $input.val(),
-				$this_clone = $clone_template.find('[data-key="'+ $(this).attr('data-key') +'"]');
-
-			$(this).html( $this_clone.html() );
-
-			$(this).find('[type="hidden"]').val( color_value ).next().val( color_value );
-
+		$sources.each( function( i, el ){
+			if ( ! $dests[i] ) {
+				console.trace('Error: source fields do not match destination fields');
+				return false;
+			}
+			if ( $( $sources[i] ).data('type') !== $($dests[i]).data('type') ) {
+				console.trace('Error: source field type does not match destination field type');
+				return false;
+			}
+			copy_value( $( $sources[i] ), $($dests[i]) );
 		});
 	}
 
-
+	/**
+	 *	Extend acf flexible content field
+	 */
 	acf.fields.flexible_content = acf.fields.flexible_content.extend({
 		events: {
 			'click [data-name="duplicate-layout"]': '_duplicate'
@@ -102,134 +259,76 @@
 			ret = orig_flexible_content.render.apply( this, arguments );
 
 			// update order numbers
-			this.$values.children('.layout').each(function( i ){
-				$(this).find('.acf-fc-layout-controlls').prepend( options.duplicate_flexible_btn );
+			this.$values.children('.layout').each(function( i, el ){
+				if ( ! $(this).find('[data-name="duplicate-layout"]').length ) {
+					$(this).find('.acf-fc-layout-controlls').prepend( options.duplicate_flexible_btn );
+				}
 			});
 
 			return ret;
 		},
 		_duplicate: function( e ) {
 			var layout,
-				$before,
-				$clone,
-				$layout_template;
+				$field,
+				$layout,
+				$new_layout;
 
-			$before = e.$el.closest('.layout');
+			// get layout wrapper
+			$layout = e.$el.closest('.layout');
 
-			layout = $before.attr( 'data-layout' );
+			// get flexible_content field
+			$field = $layout.closest('.acf-field');
 
-			$clone = $before.clone();
+			// acf set field contenxt
+			acf.fields.flexible_content.set( '$field', $field );
 
-			reset_ids( $clone );
+			// acf add target layout before source layout
+			acf.fields.flexible_content.add( $layout.data('layout'), $layout );
 
-			reset_fields( $clone, this.$clones.children('.layout[data-layout="' + layout + '"]') );
+			// get the added layout
+			$new_layout = $layout.prev( '.layout' );
 
-			$clone.attr( 'data-layout', '_duplicate' ).appendTo(this.$clones);
+			// copy values from source layout to destination
+			copy_values( $layout, $new_layout, '> .acf-table > tbody > .acf-row > .acf-field, > .acf-fields > .acf-field' ); // exclude clones!
 
-			this.add( '_duplicate', $before );
-
-			$clone.remove();
-
-		},
-		get_me:function(){
-			console.log(this);
 		}
 	});
 
+	/**
+	 *	Extend acf flexible content field
+	 */
 	acf.fields.repeater = acf.fields.repeater.extend({
 		events: {
 			'click a[data-event="duplicate-row"]': '_duplicate'
 		},
-
 		render: function() {
 
 			var ret;
 
 			ret = orig_repeater.render.apply( this, arguments );
 
-			// update order numbers
+			// add duplicate btn
 			this.$tbody.children().each(function(i){
 				$(this).find('> td.remove').append( options.duplicate_repeater_btn );
 			});
 
 			return ret;
 		},
-
 		_duplicate: function( e ) {
 
-			var $prev_clone,
-				id, uniquid,
-				$row,
-				$template, $tmp,
-				$copy,
+			var $source, $dest;
 
-				selectedValue,
-				editorContent;
-			// vars
-
-
-			// add before row
+			// get source row
 			if( e.$el.hasClass('acf-icon') ) {
-				$row = e.$el.closest('.acf-row');
+				$source = e.$el.closest('.acf-row');
+			} else {
+				return;
 			}
+			// add destination row
+			$dest = this.add( $source ); // add before source!
 
-			// backup acf clone options
-			$prev_clone = this.$clone;
-
-			$template = $row.clone();
-			$tmp = $('<table />').appendTo('body').append( $template );
-
-			reset_ids( $template, $row.siblings('[data-id="acfcloneindex"]').first() );
-
-
-			reset_fields( $template, $row.closest('.acf-table').find('tr.acf-clone') );
-
-			// fake acf.clone() current row
-			this.$clone = {
-				'$el'		: $template,
-				'search'	: 'acfcloneindex',
-				'replace'	: false,
-			};
-
-			// get selection-field values, because these aren't copied by default
-			// see: https://api.jquery.com/clone/#entry-longdesc
-			selectedValue = {};
-			$row.find('select').each(function(index) {
-				selectedValue[index] = $(this).val();
-			});
-
-			$row.find('.acf-field-wysiwyg').each(function( i, el ) {
-				var $field = $(this);
-			});
-
-			// get wysiwyg-field values, because these aren't copied by default
-			// see: https://api.jquery.com/clone/#entry-longdesc
-			editorContent = {};
-			$row.find('.acf-field-wysiwyg iframe').contents().find("body").each(function(index) {
-				editorContent[index] = $(this).html();
-			});
-
-			// make copy
-			$copy = this.add( $row );
-
-			// restore acf clone options
-			this.$clone = $prev_clone;
-			$tmp.remove();
-
-			// restore selection values
-			$copy.find('select').each(function(index) {
-				$(this).find("option[value = '" + selectedValue[index] + "']").attr("selected", "selected");
-			});
-
-			// restore WYSIWYG editor contents
-			$copy.find('.acf-field-wysiwyg textarea').each(function(index) {
-				$(this).html(editorContent[index]);
-			});
-
-			// init fields
-			//*/
-			// give the copy back
-			return $copy;
+			// copy values from source row to destination
+			copy_values( $source, $dest );
 
 		},
 	});

@@ -1,34 +1,28 @@
+# Copyright (C) 2018 joern
+# This file is distributed under the GNU General Public License v2 or later.
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: ACF Duplicate Repeater\n"
+"Project-Id-Version: ACF Duplicate Repeater v1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-27 14:20+0200\n"
-"PO-Revision-Date: 2016-03-20 23:36+0100\n"
-"Last-Translator: Jörn Lund <joern@podpirate.org>\n"
+"POT-Creation-Date: 2018-06-14T16:27:39+00:00\n"
+"PO-Revision-Date: 2018-06-14T16:27:39+00:00\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: WP Make Pot\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
-"_n_noop:1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
-"X-Poedit-Basepath: ..\n"
+"_n_noop:1,2;_c;_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
+"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;"
+"esc_html_x:1,2c\n"
 "X-Textdomain-Support: yes\n"
-"Language-Team: \n"
-"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-Basepath: ./\n"
+"Last-Translator: \n"
+"X-Poedit-SearchPath-0: ..\n"
 "X-Poedit-SearchPathExcluded-0: node_modules\n"
-
-#: include/AcfDuplicateRepeater/Admin/Admin.php:49
-#, php-format
-msgctxt "1: ACF Pro URL, 2: plugins page url"
-msgid ""
-"The ACF Duplicate Repeater plugin only provies support for <a href="
-"\"%1$s\">ACF Pro</a>. You can disable and uninstall it on the <a href="
-"\"%2$s\">plugins page</a>."
-msgstr ""
 
 #: include/AcfDuplicateRepeater/Admin/Admin.php:74
 msgid "Duplicate Entry"

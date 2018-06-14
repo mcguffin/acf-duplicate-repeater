@@ -330,6 +330,7 @@
 			// copy values from source row to destination
 			copy_values( $source, $dest );
 
+			this.$input.trigger('change');
 		},
 	});
 

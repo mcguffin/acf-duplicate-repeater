@@ -28,6 +28,12 @@
 	}
 }
 
+.acf-flexible-content .layout:hover .acf-fc-layout-controls .acf-icon.-plus,
+.acf-flexible-content .layout.-hover .acf-fc-layout-controls .acf-icon.-plus,
+.acf-flexible-content .layout:hover .acf-fc-layout-controls .acf-icon.-minus,
+.acf-flexible-content .layout.-hover .acf-fc-layout-controls .acf-icon.-minus {
+
+}
 
 .acf-row {
 	&.copy {
@@ -40,7 +46,8 @@
 
 .acf-flexible-content {
 	.layout {
-		.acf-fc-layout-controlls {
+		.acf-fc-layout-controls,
+		.acf-fc-layout-controlls /* acf < 5.7 */ {
 			.acf-icon {
 				&.-copy {
 					visibility:hidden;
@@ -48,7 +55,8 @@
 			}
 		}
 		&:hover {
-			.acf-fc-layout-controlls {
+			.acf-fc-layout-controls,
+			.acf-fc-layout-controlls /* acf < 5.7 */ {
 				.acf-icon {
 					&.-copy {
 						visibility:visible;

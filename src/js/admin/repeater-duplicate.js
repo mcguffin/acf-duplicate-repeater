@@ -7,8 +7,13 @@
 		 */
 		copy_value_cb = {
 			_default: function( $src, $dest, type ) { // OKAY
-				var $srces = $src.find('[type="'+type+'"]');
+				var $srces = $src.find('[type="'+type+'"]'),
+					srcField = acf.getField($src),
+					destField = acf.getField($dest);
+				//destField.val( srcField.val );
+
 				$dest.find('[type="'+type+'"]').each(function(i,el){
+					//console.log(type,this,$srces[i],$( $srces[i] ).val())
 					$(this).val( $( $srces[i] ).val() );
 				});
 
@@ -29,8 +34,11 @@
 				});
 			},
 			color_picker: function( $src, $dest ) { // OKAY
-				copy_value_cb['_default']($src, $dest, 'text' );
-				copy_value_cb['_default']($src, $dest, 'hidden' );
+				var srcField = acf.getField($src),
+					destField = acf.getField($dest),
+					val = srcField.$inputText().val();
+
+				destField.$inputText().iris( 'option', 'color', val );
 			},
 			date_picker: function( $src, $dest ) { // OKAY
 				copy_value_cb['_default']($src, $dest, 'text' );
@@ -53,20 +61,22 @@
 				}
 			},
 			flexible_content: function( $src, $dest ) {
-				var selector = '> .acf-input > .acf-flexible-content > .values > .layout';
-				acf.fields.flexible_content.set( '$field', $dest );
+				var selector = '> .acf-input > .acf-flexible-content > .values > .layout',
+					srcField = acf.getField($src),
+					destField = acf.getField($dest);
+				//acf.fields.flexible_content.set( '$field', $dest );
 
-				$src.find( selector ).each(function(i,layout){
+				srcField.$layouts().each(function(i,layout){
 					// each repeater entry... find fields in repeater entry
 					var $layout = $(layout),
 						$new_layout;
 
-					acf.fields.flexible_content.add( $layout.data('layout') );
+					destField.add( { layout: $layout.data('layout') } );
 
-					$new_layout = $dest.find( selector ).last();
+					$new_layout = destField.$layouts().last();
 
 					// tbl + block + row
-					copy_values( $(layout), $new_layout, '> .acf-table > tbody > .acf-row > .acf-field, > .acf-fields > .acf-field' ); // exclude clones!
+					copy_values( $layout, $new_layout, '> .acf-table > tbody > .acf-row > .acf-field, > .acf-fields > .acf-field' ); // exclude clones!
 
 				}); // table
 			},
@@ -84,7 +94,10 @@
 				});
 			},
 			google_map: function( $src, $dest ) { // OKAY
-				copy_value_cb['_default']($src, $dest, 'hidden' );
+				var srcField = acf.getField($src),
+					destField = acf.getField($dest);
+				destField.setValue( srcField.getValue() );
+//				copy_value_cb['_default']($src, $dest, 'hidden' );
 			},
 			group: function( $src, $dest ) {
 				copy_values( $src, $dest, '> .acf-input > .acf-table > tbody > .acf-row > .acf-field, > .acf-input > .acf-fields > .acf-field' ); // exclude clones!
@@ -136,14 +149,19 @@
 				$input.trigger('change');
 			},
 			repeater:function( $src, $dest ) {
+				var srcField = acf.getField($src),
+					destField = acf.getField($dest);
+				srcField.$rows().each(function(i,row){
+					$new_row = destField.add();
+					copy_values( $(row), $new_row, '> .acf-field, > .acf-fields > .acf-field' );
+				});
 
-				acf.fields.repeater.set( '$field', $dest );
-				$src.find('> .acf-input > .acf-repeater > .acf-table > tbody > .acf-row:not(.acf-clone)').each(function(i,row){
-					// each repeater entry... find fields in repeater entry
-					var $new_row = acf.fields.repeater.add();
-
-					copy_values( $(row), $new_row, '> .acf-field, > .acf-fields > .acf-field' ); // exclude clones!
-				}); // table
+				// $src.find('> .acf-input > .acf-repeater > .acf-table > tbody > .acf-row:not(.acf-clone)').each(function(i,row){
+				// 	// each repeater entry... find fields in repeater entry
+				// 	var $new_row = acf.fields.repeater.add();
+				//
+				// 	copy_values( $(row), $new_row, '> .acf-field, > .acf-fields > .acf-field' ); // exclude clones!
+				// }); // table
 			},
 			select: function( $src, $dest, _selector ) { // OKAY
 				_selector = _selector || ' > .acf-input > select';
@@ -182,18 +200,19 @@
 				copy_value_cb['select']( $src, $dest );
 			},
 			wysiwyg: function( $src, $dest ) { // ...
-				var init_cb = function( ed, id, init, $field ) {
-					if ( $field.get(0) === $dest.get(0) ) {
-						var srcEd = tinymce.get( $src.find('textarea').attr('id') );
-						if ( srcEd ) {
-							ed.setContent( srcEd.getContent() );
-						}
-					//	acf.remove_action('wysiwyg_tinymce_init', init_cb ); // mhmmmm
-					}
-				};
-				acf.add_action('wysiwyg_tinymce_init', init_cb );
+				var srcField = acf.getField($src),
+					destField = acf.getField($dest),
+					dest_id = destField.$input().attr('id'),
+					val = srcField.getValue(), editor;
 
-				$dest.find('textarea').html( $src.find('textarea').html() );
+				editor = tinymce.get( dest_id );
+				if ( !! editor ) {
+					// editor already inited
+					editor.setContent( val );
+				} else {
+					// delayed init
+					destField.$input().html( val );
+				}
 			},
 		};
 
@@ -276,7 +295,7 @@
 			ret = this.parent.render.apply( this, arguments );
 
 			// add duplicate btn
-			this.$el.find('.values [data-layout]').each(function( i, el ){
+			this.$layouts().each(function( i, el ){
 				if ( ! $(this).find('[data-name="duplicate-layout"]').length ) {
 					$(this).find('.acf-fc-layout-controls').prepend( options.duplicate_flexible_btn );
 				}
@@ -292,7 +311,7 @@
 
 			// get layout wrapper
 			$layout = $(e.target).closest('.layout');
-console.log(this)
+
 			// get flexible_content field
 			$field = $layout.closest('.acf-field');
 
@@ -301,8 +320,8 @@ console.log(this)
 
 			// acf add target layout before source layout
 			this.add( {
-				'layout': $layout.data('layout'),
-				'before': $layout,
+				layout: $layout.data('layout'),
+				before: $layout,
 			});
 
 			// get the added layout
@@ -330,7 +349,7 @@ console.log(this)
 			ret = this.parent.render.apply( this, arguments );
 
 			// add duplicate btn
-			this.$tbody.children().each(function(i){
+			this.$rows().each(function(i){
 				$(this).find('> td.remove').append( options.duplicate_repeater_btn );
 			});
 
@@ -341,18 +360,18 @@ console.log(this)
 			var $source, $dest;
 
 			// get source row
-			if( e.$el.hasClass('acf-icon') ) {
-				$source = e.$el.closest('.acf-row');
+			if( $(e.target).hasClass('acf-icon') ) {
+				$source = $(e.target).closest('.acf-row');
 			} else {
 				return;
 			}
 			// add destination row
-			$dest = this.add( $source ); // add before source!
+			$dest = this.add( { before: $source } ); // add before source!
 
 			// copy values from source row to destination
 			copy_values( $source, $dest );
 
-			this.$input.trigger('change');
+//			this.$input.trigger('change');
 		},
 	});
 

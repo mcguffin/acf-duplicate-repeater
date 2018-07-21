@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 var gulputil = require('gulp-util');
-var concat = require('gulp-concat');  
-var uglify = require('gulp-uglify');  
+var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
 var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 var rename = require('gulp-rename');
@@ -24,7 +24,7 @@ gulp.task('styles-admin', function() {
 
 
 gulp.task('scripts-admin', function() {
-    return [ 
+    return [
     	gulp.src( [
 			'./src/js/admin/repeater-duplicate.js',
 		] )
@@ -33,6 +33,15 @@ gulp.task('scripts-admin', function() {
 //			.pipe( concat('admin.js') )
 			.pipe( sourcemaps.write() )
 			.pipe( gulp.dest( './js/admin/' ) ),
+
+		gulp.src( [
+			'./src/js/legacy/5.6/admin/repeater-duplicate.js',
+		] )
+			.pipe( sourcemaps.init() )
+			.pipe( uglify().on('error', gulputil.log ) )
+//			.pipe( concat('admin.js') )
+			.pipe( sourcemaps.write() )
+			.pipe( gulp.dest( './js/legacy/5.6/admin/' ) ),
     ];
 
 });
@@ -51,6 +60,3 @@ gulp.task('watch', function() {
 	gulp.watch('./src/js/**/*.js',['scripts','scripts-admin']);
 });
 gulp.task('default', ['build','watch']);
-
-
-

@@ -30,7 +30,7 @@ class Admin extends Core\Singleton {
 			// enqueue assets
 			add_action( 'admin_enqueue_scripts' , array( $this, 'enqueue_assets' ) );
 
-		} else if ( class_exists( 'acf' ) && current_user_can( 'activate_plugins' ) ) {
+		} else if ( ! class_exists( 'acf' ) && current_user_can( 'activate_plugins' ) ) {
 
 			// say something about incompatibility
 			add_action( 'admin_notices', array( $this, 'print_acf_free_notice' ) );
@@ -46,7 +46,7 @@ class Admin extends Core\Singleton {
 		<div class="notice notice-error is-dismissible">
 			<p><?php
 				printf(
-					_x( 'The ACF Duplicate Repeater plugin only provies support for <a href="%1$s">ACF Pro</a>. You can disable and uninstall it on the <a href="%2$s">plugins page</a>.', 
+					_x( 'The ACF Duplicate Repeater plugin only provies support for <a href="%1$s">ACF Pro</a>. You can disable and uninstall it on the <a href="%2$s">plugins page</a>.',
 						'1: ACF Pro URL, 2: plugins page url',
 						'acf-quick-edit-fields'
 					),
@@ -66,7 +66,12 @@ class Admin extends Core\Singleton {
 
 		wp_enqueue_style( 'acf-repeater-duplicate-admin' , $this->core->get_asset_url( '/css/admin/repeater-duplicate.css' ), array('acf-pro-input') );
 
-		wp_enqueue_script( 'acf-repeater-duplicate-admin' , $this->core->get_asset_url( 'js/admin/repeater-duplicate.js' ), array('acf-pro-input') );
+		if ( version_compare( acf()->version, '5.7.0', '>=' ) ) {
+			$script_src = 'js/admin/repeater-duplicate.js';
+		} else {
+			$script_src = 'js/legacy/5.6/admin/repeater-duplicate.js';
+		}
+		wp_enqueue_script( 'acf-repeater-duplicate-admin' , $this->core->get_asset_url( $script_src ), array('acf-pro-input') );
 		wp_localize_script('acf-repeater-duplicate-admin' , 'acf_duplicate_repeater' , array(
 			'options'	=> array(
 				'duplicate_repeater_btn' => sprintf(

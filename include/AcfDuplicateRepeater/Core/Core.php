@@ -2,7 +2,7 @@
 
 namespace AcfDuplicateRepeater\Core;
 
-class Core extends Singleton {
+class Core extends Plugin {
 
 	/**
 	 *	Private constructor
@@ -15,7 +15,7 @@ class Core extends Singleton {
 		register_activation_hook( ACF_DUPLICATE_REPEATER_FILE, array( __CLASS__ , 'activate' ) );
 		register_deactivation_hook( ACF_DUPLICATE_REPEATER_FILE, array( __CLASS__ , 'deactivate' ) );
 		register_uninstall_hook( ACF_DUPLICATE_REPEATER_FILE, array( __CLASS__ , 'uninstall' ) );
-		
+
 		parent::__construct();
 	}
 
@@ -27,10 +27,10 @@ class Core extends Singleton {
 	public function wp_enqueue_style() {
 	}
 
-	
+
 	/**
 	 *	Load text domain
-	 * 
+	 *
 	 *  @action plugins_loaded
 	 */
 	public function load_textdomain() {
@@ -40,7 +40,7 @@ class Core extends Singleton {
 
 	/**
 	 *	Init hook.
-	 * 
+	 *
 	 *  @action init
 	 */
 	public function init() {

@@ -6,7 +6,7 @@ http://www.advancedcustomfields.com/pro/
 
 Adds a duplicate button to ACF Repeater Fields.
 
-Tested up to WP 4.9 and ACF Pro 5.6.10.
+Tested up to WP 4.9 and ACF Pro 5.7.0.
 
 Requires at least PHP 5.3.
 

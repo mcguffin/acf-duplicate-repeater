@@ -1,0 +1,18 @@
+{
+  "modules": {
+    "admin": {
+      "css": true,
+      "js": true
+    },
+    "autoupdate": {},
+    "git": {},
+    "gulp": {}
+  },
+  "plugin_author": "J\u00f6rn Lund",
+  "plugin_author_uri": "https://github.com/mcguffin/",
+  "plugin_name": "ACF Duolicate Repeater",
+  "plugin_namespace": "AcfDuplicateRepeater",
+  "plugin_slug": "acf_duplicate_repeater",
+  "this_year": 2018,
+  "wp_plugin_slug": "acf-duplicate-repeater"
+}

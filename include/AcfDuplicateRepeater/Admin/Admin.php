@@ -65,11 +65,11 @@ class Admin extends Core\Singleton {
 	function enqueue_assets() {
 
 		wp_enqueue_style( 'acf-repeater-duplicate-admin' , $this->core->get_asset_url( '/css/admin/repeater-duplicate.css' ), array('acf-pro-input') );
-
+		$suffix = ( defined('SCHRIPT_DEBUG') && SCHRIPT_DEBUG ) ? '' : '.min';
 		if ( version_compare( acf()->version, '5.7.0', '>=' ) ) {
-			$script_src = 'js/admin/repeater-duplicate.js';
+			$script_src = "js/admin/repeater-duplicate{$suffix}.js";
 		} else {
-			$script_src = 'js/legacy/5.6/admin/repeater-duplicate.js';
+			$script_src = "js/legacy/5.6/admin/repeater-duplicate{$suffix}.js";
 		}
 		wp_enqueue_script( 'acf-repeater-duplicate-admin' , $this->core->get_asset_url( $script_src ), array('acf-pro-input') );
 		wp_localize_script('acf-repeater-duplicate-admin' , 'acf_duplicate_repeater' , array(

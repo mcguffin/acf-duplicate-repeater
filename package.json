@@ -1,28 +1,29 @@
 {
   "name": "acf-duplicate-repeater",
-  "version": "1.0.0",
-  "description": "Enter description here.",
-  "main": "js/wp-robocrop.combined.min.js",
+  "version": "0.0.1",
+  "description": "Plugin description",
+  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mcguffin/acf-duplicate-repeater.git"
+    "url": "git+https://github.com//acf-duplicate-repeater.git"
   },
   "author": "Jörn Lund",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mcguffin/acf-duplicate-repeater/issues"
+    "url": "https://github.com//acf-duplicate-repeater/issues"
   },
-  "homepage": "https://github.com/mcguffin/acf-duplicate-repeater#readme",
+  "homepage": "https://github.com//acf-duplicate-repeater#readme",
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-concat": "^2.6.1",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "^3.0.0",
-    "gulp-sourcemaps": "^1.9.1",
-    "gulp-uglify": "^2.0.0",
-    "gulp-util": "^3.0.8"
+    "gulp": "*",
+    "gulp-autoprefixer": "*",
+    "gulp-concat": "*",
+    "gulp-rename": "*",
+    "gulp-sass": "*",
+    "gulp-sourcemaps": "*",
+    "gulp-uglify": "*",
+    "gulp-util": "*"
   }
 }

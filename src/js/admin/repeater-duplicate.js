@@ -269,7 +269,6 @@
 	var _extend = function(obj,extend) {
 		var parent = $.extend({},obj);
 		$.each(extend,function(k,v) {
-			console.log(k,obj.hasOwnProperty(k))
 			if ( 'undefined' !== typeof obj[k] ) {
 				if ( 'events' === k ) {
 					obj.events = $.extend( obj.events, v );

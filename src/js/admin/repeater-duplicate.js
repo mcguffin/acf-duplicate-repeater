@@ -214,6 +214,15 @@
 					destField.$input().html( val );
 				}
 			},
+			table: function ($src, $dest){
+
+				// copy table content
+				$dest.find('.acf-table-table').html($src.find('.acf-table-table').html());
+
+				// trigger change
+				$dest.find('.acf-table-top-left .acf-table-add-col').trigger('click');
+				$dest.find('.acf-table-bottom-left + .acf-table-bottom-cell .acf-table-remove-col').trigger('click');
+			},
 		};
 
 	/**

@@ -16,6 +16,7 @@ class Admin extends Core\Singleton {
 		$this->core = Core\Core::instance();
 
 		add_action( 'after_setup_theme' , array( $this , 'setup' ) ); // Y ! admin_init?
+		add_action( 'admin_init' , array( $this , 'admin_init' ) );
 	}
 
 	/**
@@ -28,7 +29,7 @@ class Admin extends Core\Singleton {
 		if ( class_exists( 'acf' ) && function_exists( 'acf_get_field_groups' ) ) {
 
 			// enqueue assets
-			add_action( 'admin_enqueue_scripts' , array( $this, 'enqueue_assets' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 
 		} else if ( ! class_exists( 'acf' ) && current_user_can( 'activate_plugins' ) ) {
 
@@ -64,7 +65,17 @@ class Admin extends Core\Singleton {
 	 */
 	function enqueue_assets() {
 
-		wp_enqueue_style( 'acf-repeater-duplicate-admin' , $this->core->get_asset_url( '/css/admin/repeater-duplicate.css' ), array('acf-pro-input') );
+		wp_enqueue_style( 'acf-repeater-duplicate-admin' );
+
+		wp_enqueue_script( 'acf-repeater-duplicate-admin' );
+
+	}
+
+	/**
+	 * Admin init
+	 */
+	function admin_init() {
+		wp_register_style( 'acf-repeater-duplicate-admin' , $this->core->get_asset_url( '/css/admin/repeater-duplicate.css' ), array('acf-pro-input') );
 
 		$suffix = ( defined('SCHRIPT_DEBUG') && SCHRIPT_DEBUG ) ? '' : '.min';
 
@@ -74,7 +85,7 @@ class Admin extends Core\Singleton {
 			$script_src = "js/legacy/5.6/admin/repeater-duplicate{$suffix}.js";
 		}
 
-		wp_enqueue_script( 'acf-repeater-duplicate-admin' , $this->core->get_asset_url( $script_src ), array('acf-pro-input') );
+		wp_register_script( 'acf-repeater-duplicate-admin' , $this->core->get_asset_url( $script_src ), array('acf-pro-input') );
 
 		wp_localize_script('acf-repeater-duplicate-admin' , 'acf_duplicate_repeater' , array(
 			'options'	=> array(
@@ -90,13 +101,6 @@ class Admin extends Core\Singleton {
 			'l10n'		=> array(
 			),
 		) );
-
-	}
-
-	/**
-	 * Admin init
-	 */
-	function admin_init() {
 	}
 
 

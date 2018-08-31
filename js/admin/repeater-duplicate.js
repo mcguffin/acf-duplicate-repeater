@@ -322,6 +322,7 @@
 		},
 		_duplicate: function( e ) {
 			var layout,
+				duplicatedEvent,
 				$field,
 				$layout,  // original field
 				$new_layout; // cloned field
@@ -379,7 +380,7 @@
 		},
 		_duplicate: function( e ) {
 
-			var $source, $dest;
+			var $source, $dest, duplicatedEvent;
 
 			// get source row
 			if( $(e.target).hasClass('acf-icon') ) {

@@ -26,7 +26,6 @@ Contributing
  - **3rd Party Field Support:** In order to keep a lean codebase and to avoid maintenance work, I won't add support non-ACF-fields. I would have to keep track of dozens of plugins. However since version 1.2 it is no rocket science to add support for your own fields: [Third Party Field Support](wiki/Third-Party-Fields).  
    Please feel free to share your knowledge in the wiki.
 
-
 Developing
 ----------
 This plugin uses gulp.

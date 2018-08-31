@@ -394,19 +394,3 @@
 
 
 })(jQuery);
-
-
-// tests!
-(function($){
-	$(document).on('acf_duplicate:table',function(e){
-		var $src = $(e.target),
-			$dest = e.destination;
-
-		$dest.find('.acf-table-table').html($src.find('.acf-table-table').html());
-		$dest.find('select').val( $src.find('select').val() ).trigger('change');
-		$dest.trigger('change');
-		// trigger change
-
-		e.preventDefault();
-	});
-})(jQuery)

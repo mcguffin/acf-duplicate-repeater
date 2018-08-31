@@ -20,6 +20,12 @@ Installation
  - As long as the plugin is active, it will check for updates
 
 
+Contributing
+------------
+
+ - **3rd Party Field Support:** In order to keep a lean codebase and to avoid maintenance work, I won't add support non-ACF-fields. I would have to keep track of dozens of plugins. However since release 1.2.0 it is no rocket science to add support for your own fields: [Third Party Field Support](wiki/Third-Party-Fields).
+
+
 Pull Requests Welcome
 ---------------------
 This plugin is mainly to be used in my client projects. It is published in the hope that it may be useful to others.

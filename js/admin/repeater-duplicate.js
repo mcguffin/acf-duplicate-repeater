@@ -151,6 +151,7 @@
 			repeater:function( $src, $dest ) {
 				var srcField = acf.getField($src),
 					destField = acf.getField($dest);
+
 				srcField.$rows().each(function(i,row){
 					$new_row = destField.add();
 					copy_values( $(row), $new_row, '> .acf-field, > .acf-fields > .acf-field' );
@@ -223,21 +224,38 @@
 	 *	@param $dest jQuery object holding the .acf-field object to copy to
 	 */
 	function copy_value( $src, $dest ) {
-		var $srcInput, $destInput, type;
+		var type,
+			copyEvent,
+			doneEvent;
 
 		type = $src.attr('data-type');
 
-		if ( ! copy_value_cb[ type ] ) {
-			// tet, range, url, number,
-			return copy_value_cb._default( $src, $dest, type );
+		copyEvent = $.Event( 'acf_duplicate:' + type );
+		copyEvent.destination = $dest;
+
+		$src.trigger( copyEvent );
+
+		// allow canceling
+		if ( copyEvent.isDefaultPrevented() ) {
+			return;
 		}
 
-		return copy_value_cb[type]( $src, $dest );
+		if ( ! copy_value_cb[ type ] ) {
+			// Defalt behaviour for text, range, url, number,
+			copy_value_cb._default( $src, $dest, type );
+		} else {
+			copy_value_cb[type]( $src, $dest );
+		}
+
+		doneEvent = $.Event( 'acf_duplicated:' + type );
+		doneEvent.destination = $dest;
+
+		$src.trigger( doneEvent );
 	}
 
 	/**
 	 *	Copy values from one set of acf-fields to another.
-	 *	It is assumed that both $src adn $dest have an identical
+	 *	It is assumed that both $src and $dest have identical fields
 	 *
 	 *	@param $src jQuery object containing the .acf-field objects to copy from
 	 *	@param $dest jQuery object containing the .acf-field object to copy to
@@ -305,8 +323,8 @@
 		_duplicate: function( e ) {
 			var layout,
 				$field,
-				$layout,
-				$new_layout;
+				$layout,  // original field
+				$new_layout; // cloned field
 
 			// get layout wrapper
 			$layout = $(e.target).closest('.layout');
@@ -375,4 +393,20 @@
 	});
 
 
+})(jQuery);
+
+
+// tests!
+(function($){
+	$(document).on('acf_duplicate:table',function(e){
+		var $src = $(e.target),
+			$dest = e.destination;
+
+		$dest.find('.acf-table-table').html($src.find('.acf-table-table').html());
+		$dest.find('select').val( $src.find('select').val() ).trigger('change');
+		$dest.trigger('change');
+		// trigger change
+
+		e.preventDefault();
+	});
 })(jQuery)

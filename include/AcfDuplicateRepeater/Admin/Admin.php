@@ -15,7 +15,7 @@ class Admin extends Core\Singleton {
 
 		$this->core = Core\Core::instance();
 
-		add_action( 'after_setup_theme' , array( $this , 'setup' ) );
+		add_action( 'after_setup_theme' , array( $this , 'setup' ) ); // Y ! admin_init?
 	}
 
 	/**
@@ -33,7 +33,7 @@ class Admin extends Core\Singleton {
 		} else if ( ! class_exists( 'acf' ) && current_user_can( 'activate_plugins' ) ) {
 
 			// say something about incompatibility
-			add_action( 'admin_notices', array( $this, 'print_acf_free_notice' ) );
+			add_action( 'admin_notices', array( $this, 'print_acf_notice' ) );
 
 		}
 	}
@@ -41,16 +41,16 @@ class Admin extends Core\Singleton {
 	/**
 	 * @action admin_notices
 	 */
-	function print_acf_free_notice() {
+	function print_acf_notice() {
 		?>
 		<div class="notice notice-error is-dismissible">
 			<p><?php
 				printf(
-					_x( 'The ACF Duplicate Repeater plugin only provies support for <a href="%1$s">ACF Pro</a>. You can disable and uninstall it on the <a href="%2$s">plugins page</a>.',
-						'1: ACF Pro URL, 2: plugins page url',
+					_x( 'The ACF Duplicate Repeater plugin only provies support for <a href="%1$s">ACF 5+</a>. You can disable and uninstall it on the <a href="%2$s">plugins page</a>.',
+						'1: ACF URL, 2: plugins page url',
 						'acf-quick-edit-fields'
 					),
-					'http://www.advancedcustomfields.com/pro/',
+					'http://www.advancedcustomfields.com/',
 					admin_url('plugins.php' )
 
 				);
@@ -65,13 +65,17 @@ class Admin extends Core\Singleton {
 	function enqueue_assets() {
 
 		wp_enqueue_style( 'acf-repeater-duplicate-admin' , $this->core->get_asset_url( '/css/admin/repeater-duplicate.css' ), array('acf-pro-input') );
+
 		$suffix = ( defined('SCHRIPT_DEBUG') && SCHRIPT_DEBUG ) ? '' : '.min';
+
 		if ( version_compare( acf()->version, '5.7.0', '>=' ) ) {
 			$script_src = "js/admin/repeater-duplicate{$suffix}.js";
 		} else {
 			$script_src = "js/legacy/5.6/admin/repeater-duplicate{$suffix}.js";
 		}
+
 		wp_enqueue_script( 'acf-repeater-duplicate-admin' , $this->core->get_asset_url( $script_src ), array('acf-pro-input') );
+
 		wp_localize_script('acf-repeater-duplicate-admin' , 'acf_duplicate_repeater' , array(
 			'options'	=> array(
 				'duplicate_repeater_btn' => sprintf(

@@ -206,16 +206,33 @@
 	 *	@param $dest jQuery object holding the .acf-field object to copy to
 	 */
 	function copy_value( $src, $dest ) {
-		var $srcInput, $destInput, type;
+		var type,
+			copyEvent,
+			doneEvent;
 
 		type = $src.attr('data-type');
 
-		if ( ! copy_value_cb[ type ] ) {
-			// tet, range, url, number,
-			return copy_value_cb._default( $src, $dest, type );
+		copyEvent = $.Event( 'acf_duplicate:' + type );
+		copyEvent.destination = $dest;
+
+		$src.trigger( copyEvent );
+
+		// allow canceling
+		if ( copyEvent.isDefaultPrevented() ) {
+			return;
 		}
 
-		return copy_value_cb[type]( $src, $dest );
+		if ( ! copy_value_cb[ type ] ) {
+			// Defalt behaviour for text, range, url, number,
+			copy_value_cb._default( $src, $dest, type );
+		} else {
+			copy_value_cb[type]( $src, $dest );
+		}
+
+		doneEvent = $.Event( 'acf_duplicated:' + type );
+		doneEvent.destination = $dest;
+
+		$src.trigger( doneEvent );
 	}
 
 	/**

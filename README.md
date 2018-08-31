@@ -22,19 +22,9 @@ Installation
 
 Contributing
 ------------
-
- - **3rd Party Field Support:** In order to keep a lean codebase and to avoid maintenance work, I won't add support non-ACF-fields. I would have to keep track of dozens of plugins. However since release 1.2.0 it is no rocket science to add support for your own fields: [Third Party Field Support](wiki/Third-Party-Fields).
-
-
-Pull Requests Welcome
----------------------
-This plugin is mainly to be used in my client projects. It is published in the hope that it may be useful to others.
-At this time I want to keep the maintenance profile low.
-I will do bugfixing and adding new features is only according to the particular needs of my clients.
-
-So please understand, that I can not respond to each of your issues.
-
-Anyway, if you are able to fix an issue or add a cool new feature, your pull request is more than welcome!
+ - **Issues, Pull Requests, Feature Requests:** Are always welcome. (But please keep in mind, that I will only support ACF and ACF Pro core fields.)
+ - **3rd Party Field Support:** In order to keep a lean codebase and to avoid maintenance work, I won't add support non-ACF-fields. I would have to keep track of dozens of plugins. However since version 1.2 it is no rocket science to add support for your own fields: [Third Party Field Support](wiki/Third-Party-Fields).  
+   Please feel free to share your knowledge in the wiki.
 
 
 Developing

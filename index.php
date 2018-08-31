@@ -60,8 +60,4 @@ if ( is_admin() || defined( 'DOING_AJAX' ) ) {
 		AutoUpdate\AutoUpdateGithub::instance()->init( __FILE__ );
 	}
 
-	Admin\Admin::instance();
-
-
-
 }

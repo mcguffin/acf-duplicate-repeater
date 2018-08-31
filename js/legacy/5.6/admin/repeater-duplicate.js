@@ -286,6 +286,7 @@
 		},
 		_duplicate: function( e ) {
 			var layout,
+				duplicatedEvent,
 				$field,
 				$layout,
 				$new_layout;
@@ -307,6 +308,11 @@
 
 			// copy values from source layout to destination
 			copy_values( $layout, $new_layout, '> .acf-table > tbody > .acf-row > .acf-field, > .acf-fields > .acf-field' ); // exclude clones!
+
+			duplicatedEvent = $.Event( 'acf_duplicated_layout' );
+			duplicatedEvent.destination = $new_layout;
+
+			$layout.trigger( duplicatedEvent );
 
 		}
 	});
@@ -333,7 +339,7 @@
 		},
 		_duplicate: function( e ) {
 
-			var $source, $dest;
+			var $source, $dest, duplicatedEvent;
 
 			// get source row
 			if( e.$el.hasClass('acf-icon') ) {
@@ -348,6 +354,12 @@
 			copy_values( $source, $dest );
 
 			this.$input.trigger('change');
+
+			duplicatedEvent = $.Event( 'acf_duplicated_row' );
+			duplicatedEvent.destination = $dest;
+
+			$source.trigger( duplicatedEvent );
+
 		},
 	});
 

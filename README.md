@@ -6,7 +6,7 @@ http://www.advancedcustomfields.com/pro/
 
 Adds a duplicate button to ACF Repeater Fields.
 
-Tested up to WP 4.9 and ACF Pro 5.7.0.  
+Tested up to WP 4.9.x and ACF Pro 5.7.0.  
 Compatible with ACF 5.x
 
 Requires at least PHP 5.3.
@@ -14,10 +14,23 @@ Requires at least PHP 5.3.
 
 Installation
 ------------
- - Head over to [releases](../../releases)
- - Download 'acf-duplicate-repeater.zip'
- - Install and activate it like any other WordPress plugin
- - As long as the plugin is active, it will check for updates
+
+ ### Production (Stand-Alone)
+  - Head over to [releases](../../releases)
+  - Download 'acf-duplicate-repeater.zip'
+  - Upload and activate it like any other WordPress plugin
+  - AutoUpdate will run as long as the plugin is active
+
+ ### Production (using Github Updater – recommended for Multisite)
+  - Install [Andy Fragen's GitHub Updater](https://github.com/afragen/github-updater) first.
+  - In WP Admin go to Settings / GitHub Updater / Install Plugin. Enter `mcguffin/acf-duplicate-repeater` as a Plugin-URI.
+
+ ### Development
+  - cd into your plugin directory
+  - $ `git clone git@github.com:mcguffin/acf-duplicate-repeater.git`
+  - $ `cd acf-duplicate-repeater`
+  - $ `npm install`
+  - $ `gulp
 
 
 Contributing

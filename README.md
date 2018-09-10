@@ -1,7 +1,7 @@
 ACF Duplicate Repeater
 ======================
 
-WordPress plugin which extends the functionality of the Advanced Custom Fields Plugin (Pro, Version 5+).  
+WordPress plugin which extends the functionality of the Advanced Custom Fields Plugin Pro.  
 http://www.advancedcustomfields.com/pro/
 
 Adds a duplicate button to ACF Repeater Fields.

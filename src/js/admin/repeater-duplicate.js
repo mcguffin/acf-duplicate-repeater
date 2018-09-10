@@ -344,9 +344,11 @@
 
 			// get the added layout
 			$new_layout = $layout.prev( '.layout' );
+			$new_layout.addClass('_duplicated');
 
 			// copy values from source layout to destination
 			copy_values( $layout, $new_layout, '> .acf-table > tbody > .acf-row > .acf-field, > .acf-fields > .acf-field' ); // exclude clones!
+			$new_layout.removeClass('_duplicated');
 
 			duplicatedEvent = $.Event( 'acf_duplicated_layout' );
 			duplicatedEvent.destination = $new_layout;
@@ -390,9 +392,10 @@
 			}
 			// add destination row
 			$dest = this.add( { before: $source } ); // add before source!
-
+			$dest.addClass('_duplicated');
 			// copy values from source row to destination
 			copy_values( $source, $dest );
+			$dest.removeClass('_duplicated');
 
 			duplicatedEvent = $.Event( 'acf_duplicated_row' );
 			duplicatedEvent.destination = $dest;

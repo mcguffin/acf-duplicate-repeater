@@ -29,6 +29,23 @@
   font-family: 'dashicons';
   content: ""; }
 
+.acf-flexible-content .layout,
+.acf-row {
+  -webkit-transition: -webkit-box-shadow 0.3s linear 0.4s;
+  transition: -webkit-box-shadow 0.3s linear 0.4s;
+  transition: box-shadow 0.3s linear 0.4s;
+  transition: box-shadow 0.3s linear 0.4s, -webkit-box-shadow 0.3s linear 0.4s;
+  -webkit-box-shadow: 0 0 5px rgba(0, 133, 186, 0);
+          box-shadow: 0 0 5px rgba(0, 133, 186, 0); }
+  .acf-flexible-content .layout._duplicated,
+  .acf-row._duplicated {
+    -webkit-box-shadow: 0 0 25px rgba(0, 133, 186, 0.8);
+            box-shadow: 0 0 25px rgba(0, 133, 186, 0.8);
+    -webkit-transition: -webkit-box-shadow 0.0s linear 0.0s;
+    transition: -webkit-box-shadow 0.0s linear 0.0s;
+    transition: box-shadow 0.0s linear 0.0s;
+    transition: box-shadow 0.0s linear 0.0s, -webkit-box-shadow 0.0s linear 0.0s; }
+
 .acf-row.copy > * {
   font-style: italic !important; }
 

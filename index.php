@@ -5,12 +5,11 @@ Plugin Name: ACF Duplicate Repeater
 Plugin URI: http://wordpress.org/
 Description: Enter description here.
 Author: Jörn Lund
-Version: 1.2.3
+Version: 1.2.4
 Author URI:
 License: GPL3
 Github Repository: mcguffin/acf-duplicate-repeater
 GitHub Plugin URI: mcguffin/acf-duplicate-repeater
-Release Asset: false
 Text Domain: acf-duplicate-repeater
 Domain Path: /languages/
 */

@@ -5,4 +5,4 @@ ACF Duplicate Repeater
 -----
  - Style: Fade in cloned field
  - Support afragen/github-updater
- - Introduce Changelog ;)
+ - Introduce Changelog

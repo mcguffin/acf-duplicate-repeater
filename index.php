@@ -10,7 +10,7 @@ Author URI:
 License: GPL3
 Github Repository: mcguffin/acf-duplicate-repeater
 GitHub Plugin URI: mcguffin/acf-duplicate-repeater
-Release Asset: true
+Release Asset: false
 Text Domain: acf-duplicate-repeater
 Domain Path: /languages/
 */

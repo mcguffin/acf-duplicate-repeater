@@ -348,7 +348,10 @@
 
 			// copy values from source layout to destination
 			copy_values( $layout, $new_layout, '> .acf-table > tbody > .acf-row > .acf-field, > .acf-fields > .acf-field' ); // exclude clones!
-			$new_layout.removeClass('_duplicated');
+//			$new_layout.removeClass('_duplicated');
+			setTimeout(function(){
+				$new_layout.removeClass('_duplicated');
+			}, 125 );
 
 			duplicatedEvent = $.Event( 'acf_duplicated_layout' );
 			duplicatedEvent.destination = $new_layout;
@@ -395,7 +398,10 @@
 			$dest.addClass('_duplicated');
 			// copy values from source row to destination
 			copy_values( $source, $dest );
-			$dest.removeClass('_duplicated');
+
+			setTimeout(function(){
+				$dest.removeClass('_duplicated');
+			}, 125 );
 
 			duplicatedEvent = $.Event( 'acf_duplicated_row' );
 			duplicatedEvent.destination = $dest;

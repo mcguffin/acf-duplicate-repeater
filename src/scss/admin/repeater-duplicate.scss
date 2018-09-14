@@ -38,12 +38,11 @@
 // blinek layout field
 .acf-flexible-content .layout,
 .acf-row {
-	transition:box-shadow 0.3s linear 0.4s;
-	box-shadow:0 0 5px rgba($wp-blue,0.0);
+	opacity:1;
+	transition:opacity 0.5s linear;
 	&._duplicated {
-		//opacity:0.1;
-		box-shadow:0 0 25px rgba($wp-blue,0.8);
-		transition:box-shadow 0.0s linear 0.0s;
+		opacity:0.01;
+		transition:opacity 0.0s linear;
 	}
 
 }

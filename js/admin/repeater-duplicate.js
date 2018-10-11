@@ -207,9 +207,12 @@
 					val = srcField.getValue(), editor;
 
 				editor = tinymce.get( dest_id );
+
 				if ( !! editor ) {
 					// editor already inited
 					editor.setContent( val );
+					$dest.find('textarea').val( $src.find('textarea').val() )
+					editor.save();
 				} else {
 					// delayed init
 					destField.$input().html( val );

@@ -1,0 +1,13 @@
+{
+  "name": "mcguffin/acf-duplicate-repeater",
+  "description": "WordPress plugin for ACF PRO allowing to duplicate repeater and flexible content fields.",
+  "keywords": [
+    "ACF",
+    "Repeater"
+  ],
+  "homepage": "https://github.com/mcguffin/acf-duplicate-repeater",
+  "type": "wordpress-plugin",
+  "require": {
+    "php": ">=5.3.0"
+  }
+}

@@ -15,6 +15,10 @@ Requires at least PHP 5.3.
 Installation
 ------------
 
+ ### Using Composer
+  - Add repository source : { "type": "vcs", "url": "https://github.com/mcguffin/acf-duplicate-repeater" }.
+  - Include "mcguffin/acf-duplicate-repeater": "dev-master" in your composer file for last master's commits or a released tag.
+
  ### Production (Stand-Alone)
   - Head over to [releases](../../releases)
   - Download 'acf-duplicate-repeater.zip'

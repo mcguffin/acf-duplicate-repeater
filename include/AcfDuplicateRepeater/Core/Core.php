@@ -9,7 +9,6 @@ class Core extends Plugin {
 	 */
 	protected function __construct() {
 		add_action( 'plugins_loaded' , array( $this , 'load_textdomain' ) );
-		add_action( 'init' , array( $this , 'register_scripts' ) );
 
 		add_action( 'after_setup_theme' , array( $this , 'setup' ) ); // Y ! admin_init?
 
@@ -31,6 +30,7 @@ class Core extends Plugin {
 
 			// enqueue assets
 			add_action( 'acf/input/admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
+			add_action( 'init' , array( $this , 'register_scripts' ) );
 
 		} else if ( ! class_exists( 'acf' ) && current_user_can( 'activate_plugins' ) ) {
 

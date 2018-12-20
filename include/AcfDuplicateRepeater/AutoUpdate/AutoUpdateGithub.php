@@ -140,11 +140,12 @@ class AutoUpdateGithub extends AutoUpdate {
 	 *	@return	string	github api url
 	 */
 	private function get_release_info_url() {
-		$url = false;
-		if ( $repo = $this->get_github_repo() ) {
-			$url = sprintf('https://api.github.com/repos/%s/releases/latest', $repo );
+
+		if ( is_null( $this->release_info ) ) {
+			$this->release_info = (object) $this->get_remote_release_info();
 		}
-		return $url;
+
+		return $this->release_info;
 	}
 
 }

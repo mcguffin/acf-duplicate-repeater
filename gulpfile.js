@@ -48,33 +48,25 @@ function concat_js( src, dest ) {
 
 
 gulp.task('scss', function() {
-	return [
-		do_scss('admin/repeater-duplicate'),
-	];
+	return do_scss('admin/repeater-duplicate');
 });
 
 
 gulp.task('js-admin', function() {
-    return [
-		do_js('admin/repeater-duplicate'),
-		do_js('legacy/5.6/admin/repeater-duplicate'),
-    ];
+    return do_js('admin/repeater-duplicate');
+})
 
+gulp.task('js-admin-legacy', function() {
+	return do_js('legacy/5.6/admin/repeater-duplicate');
 });
 
 
-gulp.task( 'js', function(){
-	return concat_js( [
-	], 'frontend.js');
-} );
-
-
-gulp.task('build', ['scss','js','js-admin'] );
+gulp.task('build', gulp.parallel('scss','js-admin','js-admin-legacy') );
 
 
 gulp.task('watch', function() {
 	// place code for your default task here
-	gulp.watch('./src/scss/**/*.scss',[ 'scss' ]);
-	gulp.watch('./src/js/**/*.js',[ 'js', 'js-admin' ]);
+	gulp.watch('./src/scss/**/*.scss', gulp.parallel( 'scss' ));
+	gulp.watch('./src/js/**/*.js', gulp.parallel( 'js-admin','js-admin-legacy' ));
 });
-gulp.task('default', ['build','watch']);
+gulp.task('default', gulp.series('build','watch'));

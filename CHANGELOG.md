@@ -1,6 +1,10 @@
 ACF Duplicate Repeater
 ======================
 
+1.2.10
+-----
+ - Fix PHP fatal on self-update
+
 1.2.7
 -----
  - fix PHP fatal when acf is not active

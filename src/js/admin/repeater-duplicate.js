@@ -150,10 +150,16 @@
 			},
 			repeater:function( $src, $dest ) {
 				var srcField = acf.getField($src),
-					destField = acf.getField($dest);
+					destField = acf.getField($dest),
+					destRows = destField.$rows();
 
-				srcField.$rows().each(function(i,row){
-					$new_row = destField.add();
+				srcField.$rows().each(function(i,row) {
+					if ( ! destRows[i] ) {
+						$new_row = destField.add();
+					} else {
+						$new_row = $(destRows[i]);
+					}
+
 					copy_values( $(row), $new_row, '> .acf-field, > .acf-fields > .acf-field' );
 				});
 

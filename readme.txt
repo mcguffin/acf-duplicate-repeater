@@ -4,7 +4,7 @@ Donate link: #### donate link ####
 Tags: #### donate link ####
 Requires at least: 3.8
 Tested up to: 4.9.1
-Requires PHP: 5.3
+Requires PHP: 5.6
 Stable tag: 1.2.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html

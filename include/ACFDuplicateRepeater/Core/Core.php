@@ -46,18 +46,58 @@ class Core extends Plugin implements CoreInterface {
 	 */
 	public function setup() {
 
-		if ( class_exists( 'acf' ) && function_exists( 'acf_get_field_groups' ) ) {
+		if ( class_exists( 'acf_pro' ) && version_compare( acf()->version, '5.7.0', '>=' ) ) {
 
 			// enqueue assets
 			add_action( 'acf/input/admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 			add_action( 'init', [ $this, 'register_assets' ] );
 
-		} else if ( ! class_exists( 'acf' ) && current_user_can( 'activate_plugins' ) ) {
+		} else if ( current_user_can( 'activate_plugins' ) ) {
 
 			// say something about incompatibility
 			add_action( 'admin_notices', [ $this, 'print_acf_notice' ] );
 
 		}
+	}
+
+	/**
+	 * @action admin_notices
+	 */
+	function print_acf_notice() {
+		$message = sprintf(
+			/* Translators: ACF-Pro URL */
+			__(
+				'The ACF Duplicate Repeater plugin only provides support for <a href="%s">ACF Pro 5.7</a> and up.',
+				'acf-duplicate-repeater'
+			),
+			'http://www.advancedcustomfields.com/pro'
+		);
+		if ( class_exists( 'acf_pro' ) && version_compare( acf()->version, '5.7.0', '<' ) ) {
+			$message .= sprintf(
+				/* Translators: Plugins page URL */
+				__(
+					'Please upgrade ACF Pro to the latest Version on the <a href="%s">plugins page</a>.',
+					'acf-duplicate-repeater'
+				),
+				admin_url('plugins.php' )
+			);
+		} else {
+			$message .= sprintf(
+				/* Translators: Plugins page URL */
+				__(
+					'You can disable and uninstall the plugin on the <a href="%2$s">plugins page</a>.',
+					'acf-duplicate-repeater'
+				),
+				admin_url('plugins.php' )
+			);
+		}
+		?>
+		<div class="notice notice-error is-dismissible">
+			<p>
+				<?php echo $message; ?>
+			</p>
+		</div>
+		<?php
 	}
 
 	/**
@@ -72,13 +112,8 @@ class Core extends Plugin implements CoreInterface {
 			->deps( ['acf-pro-input'] );
 
 
-		if ( version_compare( acf()->version, '5.7.0', '>=' ) ) {
-			$script_src = "js/admin/repeater-duplicate.js";
-		} else {
-			$script_src = "js/legacy/5.6/admin/repeater-duplicate.js";
-		}
 
-		$this->script_asset = Asset\Asset::get( $script_src )
+		$this->script_asset = Asset\Asset::get( 'js/admin/repeater-duplicate.js' )
 			->footer( false )
 			->deps( ['acf-pro-input'] )
 			->localize( [

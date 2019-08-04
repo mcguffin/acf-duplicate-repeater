@@ -705,6 +705,179 @@
 				    ],
                     "min": "",
                     "max": ""
+                },
+                "layout_50060057b978a": {
+                    "key": "layout_50060057b978a",
+                    "name": "Repeatable",
+                    "label": "repeatable",
+                    "display": "block",
+                    "sub_fields": [
+				        {
+				            "key": "field_5006fec596523",
+				            "label": "Repeater Basic",
+				            "name": "repeater_basic",
+				            "type": "repeater",
+				            "instructions": "",
+				            "required": 0,
+				            "conditional_logic": 0,
+				            "wrapper": {
+				                "width": "",
+				                "class": "",
+				                "id": ""
+				            },
+				            "collapsed": "",
+				            "min": 0,
+				            "max": 0,
+				            "layout": "row",
+				            "button_label": "",
+				            "sub_fields": [
+						        {
+						            "key": "field_5006f3f0aee8f",
+						            "label": "Text",
+						            "name": "text",
+						            "type": "text",
+						            "instructions": "",
+						            "required": 0,
+						            "conditional_logic": 0,
+						            "wrapper": {
+						                "width": "",
+						                "class": "",
+						                "id": ""
+						            },
+						            "default_value": "",
+						            "placeholder": "",
+						            "prepend": "",
+						            "append": "",
+						            "maxlength": "",
+						            "show_column": 0,
+						            "show_column_sortable": 0,
+						            "show_column_weight": 1000,
+						            "allow_quickedit": 0,
+						            "allow_bulkedit": 0
+						        },
+						        {
+						            "key": "field_5006f3f5aee90",
+						            "label": "Text Area",
+						            "name": "textarea",
+						            "type": "textarea",
+						            "instructions": "",
+						            "required": 0,
+						            "conditional_logic": 0,
+						            "wrapper": {
+						                "width": "",
+						                "class": "",
+						                "id": ""
+						            },
+						            "default_value": "",
+						            "placeholder": "",
+						            "maxlength": "",
+						            "rows": "",
+						            "new_lines": "",
+						            "show_column": 0,
+						            "show_column_weight": 1000,
+						            "allow_quickedit": 0,
+						            "allow_bulkedit": 0
+						        },
+						        {
+						            "key": "field_5006f409aee91",
+						            "label": "Number",
+						            "name": "number",
+						            "type": "number",
+						            "instructions": "",
+						            "required": 0,
+						            "conditional_logic": 0,
+						            "wrapper": {
+						                "width": "",
+						                "class": "",
+						                "id": ""
+						            },
+						            "default_value": "",
+						            "placeholder": "",
+						            "prepend": "",
+						            "append": "",
+						            "min": "",
+						            "max": "",
+						            "step": "",
+						            "show_column": 0,
+						            "show_column_sortable": 0,
+						            "show_column_weight": 1000,
+						            "allow_quickedit": 0,
+						            "allow_bulkedit": 0
+						        },
+						        {
+						            "key": "field_5006f417aee92",
+						            "label": "Range",
+						            "name": "range",
+						            "type": "range",
+						            "instructions": "",
+						            "required": 0,
+						            "conditional_logic": 0,
+						            "wrapper": {
+						                "width": "",
+						                "class": "",
+						                "id": ""
+						            },
+						            "default_value": "",
+						            "min": "",
+						            "max": "",
+						            "step": "",
+						            "prepend": "",
+						            "append": "",
+						            "show_column": 0,
+						            "show_column_sortable": 0,
+						            "show_column_weight": 1000,
+						            "allow_quickedit": 0,
+						            "allow_bulkedit": 0
+						        },
+						        {
+						            "key": "field_5006f425aee93",
+						            "label": "E-Mail",
+						            "name": "e-mail",
+						            "type": "email",
+						            "instructions": "",
+						            "required": 0,
+						            "conditional_logic": 0,
+						            "wrapper": {
+						                "width": "",
+						                "class": "",
+						                "id": ""
+						            },
+						            "default_value": "",
+						            "placeholder": "",
+						            "prepend": "",
+						            "append": "",
+						            "show_column": 0,
+						            "show_column_sortable": 0,
+						            "show_column_weight": 1000,
+						            "allow_quickedit": 0,
+						            "allow_bulkedit": 0
+						        },
+						        {
+						            "key": "field_5006f433aee94",
+						            "label": "URL",
+						            "name": "url",
+						            "type": "url",
+						            "instructions": "",
+						            "required": 0,
+						            "conditional_logic": 0,
+						            "wrapper": {
+						                "width": "",
+						                "class": "",
+						                "id": ""
+						            },
+						            "default_value": "",
+						            "placeholder": "",
+						            "show_column": 0,
+						            "show_column_sortable": 0,
+						            "show_column_weight": 1000,
+						            "allow_quickedit": 0,
+						            "allow_bulkedit": 0
+						        }
+						    ]
+				        }
+				    ],
+                    "min": "",
+                    "max": ""
                 }
             },
             "button_label": "Add Row",

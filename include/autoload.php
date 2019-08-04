@@ -1,6 +1,11 @@
 <?php
+/**
+ *	@package ACFDuplicateRepeater
+ *	@version 1.0.0
+ *	2018-09-22
+ */
 
-namespace AcfDuplicateRepeater;
+namespace ACFDuplicateRepeater;
 
 if ( ! defined('ABSPATH') ) {
 	die('FU!');
@@ -31,4 +36,4 @@ function __autoload( $class ) {
 }
 
 
-spl_autoload_register( 'AcfDuplicateRepeater\__autoload' );
+spl_autoload_register( 'ACFDuplicateRepeater\__autoload' );

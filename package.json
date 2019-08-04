@@ -3,27 +3,75 @@
   "version": "0.0.1",
   "description": "Plugin description",
   "private": true,
+  "author": "mcguffin",
+  "license": "GPLv3",
+  "engines": {
+    "node": "12.4.0",
+    "npm": "^6.9.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "i18n": "wp i18n make-pot . languages/acf-duplicate-repeater.pot --domain=acf-duplicate-repeater --exclude=tmp/*",
+    "dev": "gulp dev",
+    "dashicons": "node ./src/run/dashicons.js",
+    "rollback": "git reset --hard HEAD~ && git push origin +master"
+  },
+  "wpPlugin": {
+    "components": {
+      "core": {
+        "components": [],
+        "flags": [
+          "css",
+          "js"
+        ]
+      },
+      "git": {
+        "user": "mcguffin",
+        "remote": "git@github.com:mcguffin/acf-duplicate-repeater.git"
+      }
+    },
+    "name": "ACF Duplicate Repeater",
+    "slug": "acf-duplicate-repeater",
+    "prefix": "acf_duplicate_repeater",
+    "textdomain": "acf-duplicate-repeater",
+    "namespace": "ACFDuplicateRepeater",
+    "author": "mcguffin",
+    "author_uri": "https://github.com/mcguffin",
+    "year": 2019
+  },
+  "browserslist": [
+    "last 3 versions",
+    "> 0.25%",
+    "IE 10"
+  ],
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5",
+    "event-stream": "^4.0.1",
+    "gulp-autoprefixer": "^6.1.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify": "^3.0.2",
+    "@babel/core": "^7.5.4",
+    "@babel/plugin-proposal-class-properties": "^7.5.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.4",
+    "@babel/plugin-transform-react-jsx": "^7.3.0",
+    "@babel/preset-env": "^7.5.4",
+    "babelify": "^10.0.0",
+    "browserify": "^16.3.0",
+    "browserify-shim": "^3.8.14",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
+  },
+  "browserify-shim": {
+    "jquery": "global:jQuery"
+  },
+  "dependencies": {
+    "jquery": "^1.12.4"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com//acf-duplicate-repeater.git"
+    "url": "git+https://github.com/mcguffin/acf-duplicate-repeater.git"
   },
-  "author": "Jörn Lund",
-  "license": "ISC",
   "bugs": {
-    "url": "https://github.com//acf-duplicate-repeater/issues"
-  },
-  "homepage": "https://github.com//acf-duplicate-repeater#readme",
-  "devDependencies": {
-    "gulp": "*",
-    "gulp-autoprefixer": "*",
-    "gulp-concat": "*",
-    "gulp-rename": "*",
-    "gulp-sass": "*",
-    "gulp-sourcemaps": "*",
-    "gulp-uglify": "*",
-    "gulp-util": "*"
+    "url": "https://github.com/mcguffin/acf-duplicate-repeater/issues"
   }
 }

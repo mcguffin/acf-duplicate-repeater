@@ -41,10 +41,9 @@ if ( ! defined('ABSPATH') ) {
 	die('FU!');
 }
 
-
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'include/autoload.php';
 
 Core\Core::instance( __FILE__ );
-
-if ( is_admin() || defined( 'DOING_AJAX' ) ) {
+if ( file_exists( __DIR__ . DIRECTORY_SEPARATOR . '.git' ) && file_exists( __DIR__ . DIRECTORY_SEPARATOR . 'test/test.php' ) ) {
+	include_once __DIR__ . DIRECTORY_SEPARATOR . 'test/test.php';
 }

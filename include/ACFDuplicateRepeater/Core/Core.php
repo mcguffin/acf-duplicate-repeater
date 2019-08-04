@@ -73,7 +73,7 @@ class Core extends Plugin implements CoreInterface {
 			'http://www.advancedcustomfields.com/pro'
 		);
 		if ( class_exists( 'acf_pro' ) && version_compare( acf()->version, '5.7.0', '<' ) ) {
-			$message .= sprintf(
+			$message .= ' ' . sprintf(
 				/* Translators: Plugins page URL */
 				__(
 					'Please upgrade ACF Pro to the latest Version on the <a href="%s">plugins page</a>.',
@@ -82,7 +82,7 @@ class Core extends Plugin implements CoreInterface {
 				admin_url('plugins.php' )
 			);
 		} else {
-			$message .= sprintf(
+			$message .= ' ' . sprintf(
 				/* Translators: Plugins page URL */
 				__(
 					'You can disable and uninstall the plugin on the <a href="%2$s">plugins page</a>.',

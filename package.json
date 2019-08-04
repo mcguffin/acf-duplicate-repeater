@@ -73,5 +73,29 @@
   },
   "bugs": {
     "url": "https://github.com/mcguffin/acf-duplicate-repeater/issues"
+  },
+  "wporg": {
+    "steps": [
+      "build",
+      "git",
+      "github",
+      "pack"
+    ],
+    "type": "plugin",
+    "build": {
+      "prebuild": [
+        "wp i18n make-pot . languages/acf-duplicate-repeater.pot --domain=acf-duplicate-repeater --exclude=tmp"
+      ],
+      "build": [
+        "gulp build"
+      ]
+    },
+    "git": {
+      "host": "github.com",
+      "user": "mcguffin"
+    },
+    "wporg": {
+      "assets": ".wporg"
+    }
   }
 }

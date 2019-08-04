@@ -1,6 +1,6 @@
-@import '../variables/variables';
+@import 'variables/index';
 
-@import '../mixins/mixins';
+@import 'mixins/index';
 
 .acf-repeater {
 	.acf-row-handle {

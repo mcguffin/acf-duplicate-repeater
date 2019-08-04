@@ -1,72 +1,114 @@
-var autoprefixer = require('gulp-autoprefixer');
-var concat = require('gulp-concat');
-var gulp = require('gulp');
-var gulputil = require('gulp-util');
-var rename = require('gulp-rename');
-var sass = require('gulp-sass');
-var sourcemaps = require('gulp-sourcemaps');
-var uglify = require('gulp-uglify');
+const fs			= require( 'fs' );
+const gulp			= require( 'gulp' );
+const glob			= require( 'glob' );
+const autoprefixer	= require( 'gulp-autoprefixer' );
+const browserify	= require( 'browserify' );
+const babelify		= require( 'babelify' );
+const buffer		= require( 'vinyl-buffer' );
+const sourcemaps	= require( 'gulp-sourcemaps' );
+const sass			= require( 'gulp-sass' );
+const source		= require( 'vinyl-source-stream' );
+const uglify		= require( 'gulp-uglify' );
+const es			= require( 'event-stream' );
 
-function do_scss( src ) {
-	var dir = src.substring( 0, src.lastIndexOf('/') );
-	return gulp.src( './src/scss/' + src + '.scss' )
-		.pipe( sourcemaps.init() )
-		.pipe( sass( { outputStyle: 'nested' } ).on('error', sass.logError) )
-		.pipe( autoprefixer({
-			browsers:['last 2 versions']
-		}) )
-		.pipe( gulp.dest( './css/' + dir ) )
-        .pipe( sass( { outputStyle: 'compressed' } ).on('error', sass.logError) )
-		.pipe( rename( { suffix: '.min' } ) )
-        .pipe( sourcemaps.write() )
-        .pipe( gulp.dest( './css/' + dir ) );
+const package = require( './package.json' );
 
+const config = {
+	sass : {
+		outputStyle: 'compressed',
+		precision: 8,
+		stopOnError: false,
+		functions: {
+			'base64Encode($string)': $string => {
+				var buffer = new Buffer( $string.getValue() );
+				return sass.types.String( buffer.toString('base64') );
+			}
+		},
+		includePaths:['src/scss/']
+	}
 }
 
-function do_js( src ) {
-	var dir = src.substring( 0, src.lastIndexOf('/') );
-	return gulp.src( './src/js/' + src + '.js' )
-		.pipe( sourcemaps.init() )
-		.pipe( gulp.dest( './js/' + dir ) )
-		.pipe( uglify().on('error', gulputil.log ) )
-		.pipe( rename( { suffix: '.min' } ) )
-		.pipe( sourcemaps.write() )
-		.pipe( gulp.dest( './js/' + dir ) );
-}
+gulp.task('build:js',cb => {
+	let tasks = glob.sync("./src/js/**/index.js")
+		.map( entry => {
+			let target = entry.replace(/(\.\/src\/js\/|\/index)/g,'');
+			return browserify({
+			        entries: [entry],
+					debug: false,
+					paths:['./src/js/lib']
+			    })
+				.transform( babelify.configure({}) )
+				.transform( 'browserify-shim' )
+				.bundle()
+				.pipe(source(target))
+				.pipe(buffer())
+			    .pipe(uglify())
+				.pipe(gulp.dest("./js"));
+		} );
 
-function concat_js( src, dest ) {
-	return gulp.src( src )
-		.pipe( sourcemaps.init() )
-		.pipe( concat( dest ) )
-		.pipe( gulp.dest( './js/' ) )
-		.pipe( uglify().on('error', gulputil.log ) )
-		.pipe( rename( { suffix: '.min' } ) )
-		.pipe( sourcemaps.write() )
-		.pipe( gulp.dest( './js/' ) );
+	return es.merge(tasks).on('end',cb)
 
-}
+});
 
-
-gulp.task('scss', function() {
-	return do_scss('admin/repeater-duplicate');
+gulp.task('build:scss', cb => {
+	return gulp.src( './src/scss/**/*.scss' )
+		.pipe(
+			sass( config.sass )
+		)
+		.pipe( autoprefixer( { browsers: package.browserlist } ) )
+		.pipe( gulp.dest('./css'));
 });
 
 
-gulp.task('js-admin', function() {
-    return do_js('admin/repeater-duplicate');
-})
+gulp.task('dev:js', cb => {
+	let tasks = glob.sync("./src/js/**/index.js")
+		.map( entry => {
+			let target = entry.replace(/(\.\/src\/js\/|\/index)/g,'');
+			return browserify({
+			        entries: [entry],
+					debug: true,
+					paths:['./src/js/lib']
+			    })
+				.transform( babelify.configure({}) )
+				.transform( 'browserify-shim' )
+				.bundle()
+				.pipe(source(target))
+				.pipe(buffer())
+			    .pipe(sourcemaps.init({loadMaps:true}))
+			    .pipe(uglify())
+			    .pipe(sourcemaps.write())
+				.pipe(gulp.dest("./js"));
+		} );
 
-gulp.task('js-admin-legacy', function() {
-	return do_js('legacy/5.6/admin/repeater-duplicate');
+	return es.merge(tasks).on('end',cb)
+});
+
+gulp.task('dev:scss', cb => {
+	return gulp.src( './src/scss/**/*.scss' )
+		.pipe( sourcemaps.init() )
+		.pipe(
+			sass( config.sass )
+		)
+		.pipe( autoprefixer( { browsers: package.browserlist } ) )
+		.pipe( sourcemaps.write( ) )
+		.pipe( gulp.dest('./css'));
 });
 
 
-gulp.task('build', gulp.parallel('scss','js-admin','js-admin-legacy') );
-
-
-gulp.task('watch', function() {
-	// place code for your default task here
-	gulp.watch('./src/scss/**/*.scss', gulp.parallel( 'scss' ));
-	gulp.watch('./src/js/**/*.js', gulp.parallel( 'js-admin','js-admin-legacy' ));
+gulp.task('watch', cb => {
+	gulp.watch('./src/scss/**/*.scss',gulp.parallel('dev:scss'));
+	gulp.watch('./src/js/**/*.js',gulp.parallel('dev:js'));
 });
-gulp.task('default', gulp.series('build','watch'));
+
+gulp.task('dev',gulp.series('dev:scss','dev:js','watch'));
+
+gulp.task('build', gulp.parallel('build:js','build:scss'));
+
+gulp.task('default',cb => {
+	console.log('run either `gulp build` or `gulp dev`');
+	cb();
+});
+
+module.exports = {
+	build:gulp.series('build')
+}

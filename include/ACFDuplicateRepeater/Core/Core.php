@@ -30,9 +30,9 @@ class Core extends Plugin implements CoreInterface {
 	 */
 	protected function __construct() {
 
-		add_action( 'after_setup_theme' , array( $this , 'setup' ) ); // Y ! admin_init?
+		add_action( 'after_setup_theme' , [ $this , 'setup' ] ); // Y ! admin_init?
 
-		add_action( 'wp_enqueue_scripts' , array( $this , 'enqueue_assets' ) );
+		add_action( 'wp_enqueue_scripts' , [ $this , 'enqueue_assets' ] );
 
 		$args = func_get_args();
 		parent::__construct( ...$args );
@@ -49,13 +49,13 @@ class Core extends Plugin implements CoreInterface {
 		if ( class_exists( 'acf' ) && function_exists( 'acf_get_field_groups' ) ) {
 
 			// enqueue assets
-			add_action( 'acf/input/admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
-			add_action( 'init' , array( $this , 'register_assets' ) );
+			add_action( 'acf/input/admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
+			add_action( 'init', [ $this, 'register_assets' ] );
 
 		} else if ( ! class_exists( 'acf' ) && current_user_can( 'activate_plugins' ) ) {
 
 			// say something about incompatibility
-			add_action( 'admin_notices', array( $this, 'print_acf_notice' ) );
+			add_action( 'admin_notices', [ $this, 'print_acf_notice' ] );
 
 		}
 	}
@@ -79,6 +79,7 @@ class Core extends Plugin implements CoreInterface {
 		}
 
 		$this->script_asset = Asset\Asset::get( $script_src )
+			->footer( false )
 			->deps( ['acf-pro-input'] )
 			->localize( [
 				'options'	=> [
@@ -92,7 +93,7 @@ class Core extends Plugin implements CoreInterface {
 						),
 				],
 				'l10n'		=> [],
-			] );
+			], 'acf_duplicate_repeater' );
 
 	}
 

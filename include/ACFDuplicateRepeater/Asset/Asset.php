@@ -39,6 +39,11 @@ class Asset {
 	private $deps = [];
 
 	/**
+	 *	@var array|boolean Localization
+	 */
+	private $in_footer = true;
+
+	/**
 	 *	@var string css|js
 	 */
 	private $type;
@@ -100,6 +105,18 @@ class Asset {
 		return $this;
 	}
 
+
+	/**
+	 *	Set Dependencies
+	 *
+	 *	@param boolean $in_footer Dependencies
+	 */
+	public function footer( $in_footer = true ) {
+		$this->in_footer = $in_footer;
+		return $this;
+	}
+
+
 	/**
 	 *	Register asset
 	 *	Wrapper for wp_register_[script|style]
@@ -150,9 +167,12 @@ class Asset {
 	 *
 	 *	@param array $deps Dependencies
 	 */
-	public function localize( $l10n = [] ) {
+	public function localize( $l10n = [], $varname = null ) {
 		if ( $this->type !== 'js' ) {
 			throw new \Exception( 'Can\'t localize stylesheet' );
+		}
+		if ( ! is_null( $varname ) ) {
+			$this->varname = $varname;
 		}
 		if ( is_array( $l10n ) ) {
 			$this->l10n = $l10n;
@@ -184,6 +204,7 @@ class Asset {
 			case 'in_footer':
 			case 'path':
 			case 'url':
+			case 'varname':
 				return $this->$var;
 			case 'deps':
 				return array_values( $this->$var );

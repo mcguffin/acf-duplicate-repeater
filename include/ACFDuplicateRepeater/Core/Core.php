@@ -30,8 +30,6 @@ class Core extends Plugin implements CoreInterface {
 	 */
 	protected function __construct() {
 
-		add_action( 'init' , array( $this , 'init' ) );
-
 		add_action( 'after_setup_theme' , array( $this , 'setup' ) ); // Y ! admin_init?
 
 		add_action( 'wp_enqueue_scripts' , array( $this , 'enqueue_assets' ) );
@@ -106,46 +104,6 @@ class Core extends Plugin implements CoreInterface {
 	public function enqueue_assets() {
 		$this->style_asset->enqueue();
 		$this->script_asset->enqueue();
-
-		Asset\Asset::get( 'css/main.css' )->enqueue();
-		Asset\Asset::get( 'js/main.js' )
-			->deps( ['jquery'] )
-			->localize( array(
-				/* Script localization */
-			) )
-			->enqueue();
-	}
-
-
-
-
-	/**
-	 *	Init hook.
-	 *
-	 *  @action init
-	 */
-	public function init() {
-	}
-
-	/**
-	 *	Get asset url for this plugin
-	 *
-	 *	@param	string	$asset	URL part relative to plugin class
-	 *	@return string URL
-	 */
-	public function get_asset_url( $asset ) {
-		return plugins_url( $asset, $this->get_plugin_file() );
-	}
-
-
-	/**
-	 *	Get asset url for this plugin
-	 *
-	 *	@param	string	$asset	URL part relative to plugin class
-	 *	@return string URL
-	 */
-	public function get_asset_path( $asset ) {
-		return $this->get_plugin_dir() . '/' . preg_replace( '/^(\/+)/', '', $asset );
 	}
 
 

@@ -12,6 +12,8 @@
   "scripts": {
     "i18n": "wp i18n make-pot . languages/acf-duplicate-repeater.pot --domain=acf-duplicate-repeater --exclude=tmp/*",
     "dev": "gulp dev",
+    "test": "node ./src/run/test.js",
+    "dev-test": "./src/run/dev-test.sh",
     "dashicons": "node ./src/run/dashicons.js",
     "rollback": "git reset --hard HEAD~ && git push origin +master"
   },

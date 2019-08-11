@@ -108,12 +108,12 @@ class Core extends Plugin implements CoreInterface {
 	public function register_assets() {
 
 		// style asset
-		$this->style_asset = Asset\Asset::get('css/admin/repeater-duplicate.css')
+		$this->style_asset = Asset\Asset::get('css/acf/duplicate-repeater.css')
 			->deps( ['acf-pro-input'] );
 
 
 
-		$this->script_asset = Asset\Asset::get( 'js/admin/repeater-duplicate.js' )
+		$this->script_asset = Asset\Asset::get( 'js/acf/duplicate-repeater.js' )
 			->footer( false )
 			->deps( ['acf-pro-input'] )
 			->localize( [

@@ -24,6 +24,7 @@ extendACF( 'FlexibleContentField', {
 		return ret;
 	},
 	_duplicate: function( e ) {
+
 		var layout,
 			duplicatedEvent,
 			$field,
@@ -40,18 +41,21 @@ extendACF( 'FlexibleContentField', {
 		//acf.fields.flexible_content.set( '$field', $field );
 
 		// acf add target layout before source layout
-		this.add( {
+		$new_layout = this.add( {
 			layout: $layout.data('layout'),
 			before: $layout,
 		});
-
+		console.log($new_layout);
+		if ( ! $new_layout ) {
+			return;
+		}
 		// get the added layout
-		$new_layout = $layout.prev( '.layout' );
+//		$new_layout = $layout.prev( '.layout' );
 		$new_layout.addClass('_duplicated');
 
 		// copy values from source layout to destination
 		copyValues( $layout, $new_layout, '> .acf-table > tbody > .acf-row > .acf-field, > .acf-fields > .acf-field' ); // exclude clones!
-//			$new_layout.removeClass('_duplicated');
+
 		setTimeout(function(){
 			$new_layout.removeClass('_duplicated');
 		}, 125 );
@@ -60,7 +64,6 @@ extendACF( 'FlexibleContentField', {
 		duplicatedEvent.destination = $new_layout;
 
 		$layout.trigger( duplicatedEvent );
-
 	}
 } );
 //module.exports = {};

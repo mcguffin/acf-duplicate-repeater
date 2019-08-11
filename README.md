@@ -11,6 +11,10 @@ Compatible with ACF 5.x
 
 Requires at least PHP 5.3.
 
+Status
+------
+
+I am currently working on the Release of this plugin in te WordPress plugin repository.
 
 Installation
 ------------
@@ -19,11 +23,10 @@ Installation
   - Add repository source : { "type": "vcs", "url": "https://github.com/mcguffin/acf-duplicate-repeater" }.
   - Include "mcguffin/acf-duplicate-repeater": "dev-master" in your composer file for last master's commits or a released tag.
 
- ### Production (Stand-Alone)
+ ### Production (Stand-Alone - no Updates!)
   - Head over to [releases](../../releases)
   - Download 'acf-duplicate-repeater.zip'
   - Upload and activate it like any other WordPress plugin
-  - AutoUpdate will run as long as the plugin is active
 
  ### Production (using Github Updater – recommended for Multisite)
   - Install [Andy Fragen's GitHub Updater](https://github.com/afragen/github-updater) first.

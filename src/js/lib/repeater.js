@@ -27,7 +27,6 @@ extendACF( 'RepeaterField', {
 	_duplicate: function( e ) {
 
 		var $source, $dest, duplicatedEvent;
-
 		// get source row
 		if( $(e.target).hasClass('acf-icon') ) {
 			$source = $(e.target).closest('.acf-row');
@@ -36,6 +35,9 @@ extendACF( 'RepeaterField', {
 		}
 		// add destination row
 		$dest = this.add( { before: $source } ); // add before source!
+		if ( ! $dest ) {
+			return;
+		}
 		$dest.addClass('_duplicated');
 		// copy values from source row to destination
 		copyValues( $source, $dest );

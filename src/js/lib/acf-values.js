@@ -10,12 +10,11 @@ const copyValueCB = {
 	button_group: 		require('acf-values/button-group.js'),
 	checkbox: 			require('acf-values/checkbox.js'),
 	color_picker: 		require('acf-values/color-picker.js'),
-	date_picker: 		require('acf-values/date-picker.js'),
-	date_time_picker:	require('acf-values/date-time-picker.js'),
+	text_and_hidden:	require('acf-values/text-and-hidden.js'),
+	date_time_picker:	require('acf-values/text-and-hidden.js'),
 	file: 				require('acf-values/file.js'),
 	flexible_content: 	( $src, $dest ) => {
-		const selector = '> .acf-input > .acf-flexible-content > .values > .layout',
-			srcField = acf.getField($src),
+		const srcField = acf.getField($src),
 			destField = acf.getField($dest);
 
 		srcField.$layouts().each( (i,layout) => {
@@ -44,8 +43,6 @@ const copyValueCB = {
 	image: 				require('acf-values/image.js'),
 	link: 				require('acf-values/link.js'),
 	oembed: 			require('acf-values/oembed.js'),
-	page_link:	 		require('acf-values/page-link.js'),
-	post_object: 		require('acf-values/post-object.js'),
 	radio: 				require('acf-values/radio.js'),
 	range: 				require('acf-values/range.js'),
 	relationship: 		require('acf-values/relationship.js'),
@@ -76,11 +73,14 @@ const copyValueCB = {
 	select: 			require('acf-values/select.js'),
 	taxonomy: 			require('acf-values/taxonomy.js'),
 	textarea: 			require('acf-values/textarea.js'),
-	time_picker: 		require('acf-values/time-picker.js'),
 	true_false: 		require('acf-values/true-false.js'),
 	user: 				require('acf-values/user.js'),
 	wysiwyg: 			require('acf-values/wysiwyg.js'),
 };
+
+//
+copyValueCB.date_time_picker = copyValueCB.date_picker = copyValueCB.time_picker = copyValueCB.text_and_hidden;
+copyValueCB.post_object = copyValueCB.page_link = copyValueCB.select;
 
 /**
  *	Copy values from one acf-field to another
@@ -102,11 +102,13 @@ const copyValue = ( $src, $dest ) => {
 		return;
 	}
 
-	if ( ! copyValueCB[ type ] ) {
+	if ( !! copyValueCB[type] ) {
+		copyValueCB[type]( $src, $dest )
+	} else if ( ['text','email', 'url', 'number'].indexOf(type) !== -1 ) {
 		// Defalt behaviour for text, range, url, number,
 		copyValueCB._default( $src, $dest, type );
 	} else {
-		copyValueCB[type]( $src, $dest );
+		copyValueCB.text_and_hidden( $src, $dest );
 	}
 
 	$src.trigger( doneEvent );

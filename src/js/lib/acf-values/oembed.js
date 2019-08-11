@@ -1,11 +1,11 @@
 import $ from 'jquery';
 import defaultCopy from './default.js';
+import textAndHiddenCopy from './text-and-hidden.js';
 
 module.exports = ( $src, $dest ) => { // OKAY
 	const val = $src.find('[type="hidden"]').val();
 
-	defaultCopy($src, $dest,'hidden');
-	defaultCopy($src, $dest,'text');
+	textAndHiddenCopy( $src, $dest );
 
 	acf.getField($dest).search( val );
 }

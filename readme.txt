@@ -28,8 +28,6 @@ Just follow the [Automatic Plugin Installation](https://wordpress.org/support/ar
 
 == Frequently asked questions ==
 
-== Frequently asked questions ==
-
 = I found a bug. Where should I post it? =
 
 Please use the issues section in the [GitHub-Repository](https://github.com/mcguffin/acf-duplicate-repeater/issues).
@@ -41,7 +39,7 @@ I will most likely not maintain the forum support forum on wordpress.org. Anyway
 Please post an issue in the [GitHub-Repository](https://github.com/mcguffin/acf-duplicate-repeater/issues)
 
 == Screenshots ==
-1.
+1. Flexible content with duplicate feature enabled.
 
 == Changelog ==
 

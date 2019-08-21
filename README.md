@@ -47,14 +47,15 @@ npm install
 npm run dev
 ```
 
-### Enable some fields for testing (and watch src folder at the same time)
+### Enable some fields and a custom post type for testing (and watch src folder at the same time)
 ```
 npm run dev-test
 ```
-Press <kbd>^C</kbd> to stop.
+Press <kbd>^C</kbd> in the terminal to stop.
 
 Contributing
 ------------
  - **Issues, Pull Requests, Feature Requests:** are always welcome. (But please keep in mind, that I will only support ACF and ACF Pro core fields.)
+ - **Having trouble with fields:** Please provide a json file with your field group definition. (see [ACF Local JSON](https://www.advancedcustomfields.com/resources/local-json/) for how to get one)
  - **3rd Party Field Support:** In order to keep a lean codebase and to avoid maintenance work, I won't add support non-ACF-fields. I would have to keep track of dozens of plugins. However since version 1.2 it is no rocket science to add support for your own fields: [Third Party Field Support](wiki/Third-Party-Fields).  
    Please feel free to share your knowledge in the wiki.

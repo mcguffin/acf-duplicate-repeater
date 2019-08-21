@@ -9,12 +9,12 @@ Adds a duplicate button to ACF Repeater Fields.
 Tested up to WP 4.9.x and ACF Pro 5.7.4.  
 Compatible with ACF 5.x
 
-Requires at least PHP 5.3.
+Requires at least PHP 5.6
 
 Status
 ------
 
-I am currently working on the Release of this plugin in te WordPress plugin repository.
+The plugin has been submitted to the wordpress plugin repository and is currently undergoing review. Stay tuned for Updates!
 
 Installation
 ------------

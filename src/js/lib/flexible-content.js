@@ -45,7 +45,7 @@ extendACF( 'FlexibleContentField', {
 			layout: $layout.data('layout'),
 			before: $layout,
 		});
-		console.log($new_layout);
+
 		if ( ! $new_layout ) {
 			return;
 		}

@@ -8,3 +8,5 @@ composer.json export-ignore
 src export-ignore
 test export-ignore
 README.md export-ignore
+.*
+*.md

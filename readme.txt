@@ -21,6 +21,7 @@ Supports all ACF Native fields.
 
 Please head over to the source code [on Github](https://github.com/mcguffin/acf-duplicate-repeater).
 
+If you are looking for support on Non-ACF-Fields, there is some documentation in the [wiki](https://github.com/mcguffin/acf-duplicate-repeater/wiki), that might come in handy.
 
 == Installation ==
 
@@ -40,6 +41,10 @@ Please post an issue in the [GitHub-Repository](https://github.com/mcguffin/acf-
 
 == Screenshots ==
 1. Flexible content with duplicate feature enabled.
+
+== Upgrade Notice ==
+
+On the whole upgrading is still a good thing.
 
 == Changelog ==
 

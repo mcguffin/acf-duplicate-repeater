@@ -90,6 +90,7 @@ copyValueCB.post_object = copyValueCB.page_link = copyValueCB.select;
  */
 const copyValue = ( $src, $dest ) => {
 	const type  = $src.attr('data-type'),
+		destField = acf.getField( $dest ),
 		copyEvent = $.Event( 'acf_duplicate:' + type ),
 		doneEvent = $.Event( 'acf_duplicated:' + type );
 
@@ -112,6 +113,10 @@ const copyValue = ( $src, $dest ) => {
 	}
 
 	$src.trigger( doneEvent );
+
+	if ( destField.has('conditions') ) {
+		destField.getConditions().render();
+	}
 }
 
 /**

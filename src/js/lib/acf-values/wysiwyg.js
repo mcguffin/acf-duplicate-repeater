@@ -10,15 +10,14 @@ module.exports = ( $src, $dest ) => { // ...
 	let destEditor = tinymce.get( dest_id );
 
 	if ( !! destEditor && !! srcEditor ) {
-		val = srcEditor.getContent()
 		// editor already inited
+		val = srcEditor.getContent()
 		destEditor.setContent( val );
 		$dest.find('textarea').val( $src.find('textarea').val() )
 		destEditor.save();
-		console.log(val);
 	} else {
-		val = srcField.getValue();
 		// delayed init
+		val = srcField.getValue();
 		destField.$input().html( val );
 	}
 }

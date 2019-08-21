@@ -125,7 +125,7 @@
             {
                 "param": "post_type",
                 "operator": "==",
-                "value": "post"
+				"value": "acf-duprepeat-test"
             }
         ]
     ],

@@ -16,6 +16,20 @@ class PluginTest {
 		add_action( 'acf/untrash_field_group', [ $this, 'mutate_field_group' ], 9 );
 		add_action( 'acf/update_field_group', [ $this, 'mutate_field_group' ], 9 );
 
+		add_action( 'init', [ $this, 'init' ] );
+
+	}
+
+	/**
+	 *	@action init
+	 */
+	public function init( $paths ) {
+		register_post_type('acf-duprepeat-test',[
+			'label'		=> 'Repeater Tests',
+			'public'	=> true,
+			'supports'	=> ['title'],
+		]);
+
 	}
 
 	/**

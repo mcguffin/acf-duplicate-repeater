@@ -7,9 +7,8 @@ package*.json export-ignore
 composer.json export-ignore
 src export-ignore
 test export-ignore
-README.md export-ignore
-.babelrc
-.editorconfig
-.eslintignore
-.sassrc
-*.md
+.babelrc export-ignore
+.editorconfig export-ignore
+.eslintignore export-ignore
+.sassrc export-ignore
+*.md export-ignore

@@ -7,6 +7,13 @@ import $ from 'jquery';
  */
 const copyValueCB = {
 	_default: 			require('acf-values/default.js'),
+	accordion:			( $src, $dest ) => {
+		copyValues(
+			$src,
+			$dest,
+			'> .acf-input > .acf-table > tbody > .acf-row > .acf-field, > .acf-input > .acf-fields > .acf-field'
+		);
+	},
 	button_group: 		require('acf-values/button-group.js'),
 	checkbox: 			require('acf-values/checkbox.js'),
 	color_picker: 		require('acf-values/color-picker.js'),
@@ -136,6 +143,8 @@ const copyValues = ( $src, $dest, _selector ) => {
 		$dests		= $dest.find( _selector );
 
 	$sources.each( ( i, el ) => {
+		console.log('src',i,el);
+		console.log('dest',i,$dests[i]);
 		if ( ! $dests[i] ) {
 			console.trace('Error: source fields do not match destination fields');
 			return false;

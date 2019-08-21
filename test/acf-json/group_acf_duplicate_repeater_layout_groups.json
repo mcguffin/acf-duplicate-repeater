@@ -738,7 +738,7 @@
 						                "id": ""
 						            },
 						            "taxonomy": "category",
-						            "field_5005": "checkbox",
+									"field_type": "checkbox",
 						            "add_term": 1,
 						            "save_terms": 0,
 						            "load_terms": 0,

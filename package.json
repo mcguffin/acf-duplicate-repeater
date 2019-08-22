@@ -1,6 +1,6 @@
 {
   "name": "acf-duplicate-repeater",
-  "version": "1.2.11",
+  "version": "2.0.0",
   "description": "Duplicate Repeater and Layout Fields in ACF Pro",
   "private": true,
   "author": "mcguffin",
@@ -81,7 +81,7 @@
       "build",
       "git",
       "github",
-      "pack"
+      "wporg"
     ],
     "type": "plugin",
     "build": {
@@ -97,7 +97,8 @@
       "user": "mcguffin"
     },
     "wporg": {
-      "assets": ".wporg"
+      "assets": ".wporg",
+      "svn": "https://plugins.svn.wordpress.org/acf-duplicate-repeater/"
     }
   }
 }

@@ -48,5 +48,8 @@ On the whole upgrading is still a good thing.
 
 == Changelog ==
 
+= 2.0.1 =
+ - Drop Support for Github Updater
+
 = 2.0.0 =
 Release in the WP Plugin Repository.

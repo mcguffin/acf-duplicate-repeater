@@ -8,7 +8,6 @@ Author: Jörn Lund
 Version: 2.0.0
 Author URI: https://github.com/mcguffin
 License: GPL3
-GitHub Plugin URI: mcguffin/acf-duplicate-repeater
 Text Domain: acf-duplicate-repeater
 Domain Path: /languages/
 */

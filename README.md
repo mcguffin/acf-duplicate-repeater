@@ -1,36 +1,24 @@
 ACF Duplicate Repeater
 ======================
 
-WordPress plugin which extends the functionality of the Advanced Custom Fields Plugin Pro.  
-http://www.advancedcustomfields.com/pro/
+This is the official github repository of the [ACF Duplicate Repeater](https://wordpress.org/plugins/acf-duplicate-repeater/) plugin.
 
 Adds a duplicate button to ACF Repeater Fields.
 
-Tested up to WP 4.9.x and ACF Pro 5.7.4.  
-Compatible with ACF 5.x
+Tested up to WP 5.2 and ACF Pro 5.8.3.
 
-Requires at least PHP 5.6
-
-Status
-------
-
-The plugin has been submitted to the wordpress plugin repository and is currently undergoing review. Stay tuned for Updates!
+Requires at least [ACF PRO 5.6](http://www.advancedcustomfields.com/pro/) and PHP 5.6
 
 Installation
 ------------
 
- ### Using Composer
-  - Add repository source : { "type": "vcs", "url": "https://github.com/mcguffin/acf-duplicate-repeater" }.
-  - Include "mcguffin/acf-duplicate-repeater": "dev-master" in your composer file for last master's commits or a released tag.
+#### In WP Admin
+ Just follow the [Automatic Plugin Installation](https://wordpress.org/support/article/managing-plugins/#automatic-plugin-installation) procedere.
 
- ### Production (Stand-Alone - no Updates!)
-  - Head over to [releases](../../releases)
-  - Download 'acf-duplicate-repeater.zip'
-  - Upload and activate it like any other WordPress plugin
+### Using Composer
+ - Add repository source : { "type": "vcs", "url": "https://github.com/mcguffin/acf-duplicate-repeater" }.
+ - Include "mcguffin/acf-duplicate-repeater": "dev-master" in your composer file for last master's commits or a released tag.
 
- ### Production (using Github Updater – recommended for Multisite)
-  - Install [Andy Fragen's GitHub Updater](https://github.com/afragen/github-updater) first.
-  - In WP Admin go to Settings / GitHub Updater / Install Plugin. Enter `mcguffin/acf-duplicate-repeater` as a Plugin-URI.
 
 Development
 -----------

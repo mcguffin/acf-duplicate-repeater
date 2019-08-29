@@ -49,6 +49,7 @@ On the whole upgrading is still a good thing.
 == Changelog ==
 
 = 2.0.1 =
+ - Fix: Duplicate Icon appears multiple times in repeater rows
  - Drop Support for Github Updater
 
 = 2.0.0 =

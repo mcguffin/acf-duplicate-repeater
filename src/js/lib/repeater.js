@@ -18,8 +18,10 @@ extendACF( 'RepeaterField', {
 		ret = this.parent.render.apply( this, arguments );
 
 		// add duplicate btn
-		this.$rows().each(function(i){
-			$(this).find('> td.remove').append( options.duplicate_repeater_btn );
+		this.$rows().each( ( i, el ) => {
+			if ( ! $(el).find('[data-event="duplicate-row"]').length ) {
+				$(el).find('> td.remove').append( options.duplicate_repeater_btn );
+			}
 		});
 
 		return ret;

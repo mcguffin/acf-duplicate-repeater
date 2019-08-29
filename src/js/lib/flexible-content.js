@@ -15,9 +15,9 @@ extendACF( 'FlexibleContentField', {
 		ret = this.parent.render.apply( this, arguments );
 
 		// add duplicate btn
-		this.$layouts().each(function( i, el ){
-			if ( ! $(this).find('[data-name="duplicate-layout"]').length ) {
-				$(this).find('.acf-fc-layout-controls').prepend( options.duplicate_flexible_btn );
+		this.$layouts().each( ( i, el ) => {
+			if ( ! $(el).find('[data-name="duplicate-layout"]').length ) {
+				$(el).find('.acf-fc-layout-controls').prepend( options.duplicate_flexible_btn );
 			}
 		});
 

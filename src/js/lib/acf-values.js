@@ -143,8 +143,6 @@ const copyValues = ( $src, $dest, _selector ) => {
 		$dests		= $dest.find( _selector );
 
 	$sources.each( ( i, el ) => {
-		console.log('src',i,el);
-		console.log('dest',i,$dests[i]);
 		if ( ! $dests[i] ) {
 			console.trace('Error: source fields do not match destination fields');
 			return false;

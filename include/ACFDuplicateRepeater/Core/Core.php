@@ -17,12 +17,12 @@ class Core extends Plugin implements CoreInterface {
 	/**
 	 *	@var Asset\Asset
 	 */
-	private $style_asset;
+	private $style_asset = null;
 
 	/**
 	 *	@var Asset\Asset
 	 */
-	private $script_asset;
+	private $script_asset = null;
 
 
 	/**
@@ -138,6 +138,9 @@ class Core extends Plugin implements CoreInterface {
 	 *	@action wp_enqueue_scripts
 	 */
 	public function enqueue_assets() {
+		if ( is_null( $this->style_asset ) ) {
+			$this->register_assets();
+		}
 		$this->style_asset->enqueue();
 		$this->script_asset->enqueue();
 	}

@@ -32,7 +32,7 @@ class Core extends Plugin implements CoreInterface {
 
 		add_action( 'after_setup_theme' , [ $this , 'setup' ] ); // Y ! admin_init?
 
-		add_action( 'wp_enqueue_scripts' , [ $this , 'enqueue_assets' ] );
+		add_action( 'acf_enqueue_scripts' , [ $this , 'enqueue_assets' ] );
 
 		$args = func_get_args();
 		parent::__construct( ...$args );

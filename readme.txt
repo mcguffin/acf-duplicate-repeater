@@ -48,6 +48,10 @@ On the whole upgrading is still a good thing.
 
 == Changelog ==
 
+= 2.0.2 =
+ - Fix: PHP Fatal in customizer
+ - Fix: Load assets only when necessary
+
 = 2.0.1 =
  - Fix: Duplicate Icon appears multiple times in repeater rows
  - Drop Support for Github Updater

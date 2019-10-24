@@ -1,6 +1,7 @@
 {
   "name": "mcguffin/acf-duplicate-repeater",
   "description": "WordPress plugin for ACF PRO allowing to duplicate repeater and flexible content fields.",
+  "license": "GPL-3.0-or-later",
   "keywords": [
     "ACF",
     "Repeater"

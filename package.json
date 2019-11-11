@@ -10,39 +10,17 @@
     "npm": "^6.9.0"
   },
   "scripts": {
-    "i18n": "wp i18n make-pot . languages/acf-duplicate-repeater.pot --domain=acf-duplicate-repeater --exclude=tmp/*",
+    "i18n": "node src/run/json-i18n.js acf-duplicate-repeater",
     "dev": "gulp dev",
     "test": "node ./src/run/test.js",
     "dev-test": "./src/run/dev-test.sh",
     "dashicons": "node ./src/run/dashicons.js",
-    "rollback": "git reset --hard HEAD~ && git push origin +master"
-  },
-  "wpPlugin": {
-    "components": {
-      "core": {
-        "components": [],
-        "flags": [
-          "css",
-          "js"
-        ]
-      },
-      "git": {
-        "user": "mcguffin",
-        "remote": "git@github.com:mcguffin/acf-duplicate-repeater.git"
-      }
-    },
-    "name": "ACF Duplicate Repeater",
-    "slug": "acf-duplicate-repeater",
-    "prefix": "acf_duplicate_repeater",
-    "textdomain": "acf-duplicate-repeater",
-    "namespace": "ACFDuplicateRepeater",
-    "author": "mcguffin",
-    "author_uri": "https://github.com/mcguffin",
-    "year": 2019
+    "rollback": "git reset --hard HEAD~ && git push origin +master",
+    "init": "mkdir -p json/acf && mkdir -p json/post-type && mkdir -p json/taxonomy && mkdir -p src/php"
   },
   "browserslist": [
     "last 3 versions",
-    "> 0.25%",
+    "> 0.125%",
     "IE 10"
   ],
   "devDependencies": {
@@ -61,13 +39,43 @@
     "browserify": "^16.3.0",
     "browserify-shim": "^3.8.14",
     "vinyl-buffer": "^1.0.1",
-    "vinyl-source-stream": "^2.0.0"
+    "vinyl-source-stream": "^2.0.0",
+    "tinyify": "^2.5.1"
   },
   "browserify-shim": {
-    "jquery": "global:jQuery"
+    "jquery": "global:jQuery",
+    "backbone": "global:Backbone",
+    "classnames": "global:classnames",
+    "@wordpress/blocks": "global:wp.blocks",
+    "@wordpress/block-editor": "global:wp.blockEditor",
+    "@wordpress/block-library": "global:wp.blockLibrary",
+    "@wordpress/components": "global:wp.components",
+    "@wordpress/compose": "global:wp.compose",
+    "@wordpress/data": "global:wp.data",
+    "@wordpress/dom": "global:wp.dom",
+    "@wordpress/editor": "global:wp.editor",
+    "@wordpress/element": "global:wp.element",
+    "@wordpress/format-library": "global:wp.formatLibrary",
+    "@wordpress/i18n": "global:wp.i18n",
+    "@wordpress/keycodes": "global:wp.keycodes",
+    "@wordpress/rich-text": "global:wp.richText"
   },
   "dependencies": {
-    "jquery": "^1.12.4"
+    "jquery": "^1.12.4",
+    "@wordpress/block-editor": "^3.2.2",
+    "@wordpress/block-library": "^2.9.2",
+    "@wordpress/blocks": "^6.7.2",
+    "@wordpress/components": "^8.3.2",
+    "@wordpress/compose": "^3.7.2",
+    "@wordpress/data": "^4.9.2",
+    "@wordpress/dom": "^2.5.2",
+    "@wordpress/editor": "^9.7.2",
+    "@wordpress/element": "^2.8.2",
+    "@wordpress/format-library": "^1.9.2",
+    "@wordpress/i18n": "^3.6.1",
+    "@wordpress/keycodes": "^2.6.2",
+    "@wordpress/media-utils": "^1.2.2",
+    "@wordpress/rich-text": "^3.7.2"
   },
   "repository": {
     "type": "git",
@@ -100,5 +108,29 @@
       "assets": ".wporg",
       "svn": "https://plugins.svn.wordpress.org/acf-duplicate-repeater/"
     }
+  },
+  "wpSkeleton": {
+    "components": {
+      "core": {
+        "components": [],
+        "flags": [
+          "css",
+          "js"
+        ]
+      },
+      "git": {
+        "user": "mcguffin",
+        "remote": "git@github.com:mcguffin/acf-duplicate-repeater.git"
+      }
+    },
+    "name": "ACF Duplicate Repeater",
+    "slug": "acf-duplicate-repeater",
+    "prefix": "acf_duplicate_repeater",
+    "textdomain": "acf-duplicate-repeater",
+    "namespace": "ACFDuplicateRepeater",
+    "author": "mcguffin",
+    "author_uri": "https://github.com/mcguffin",
+    "year": 2019,
+    "type": "plugin"
   }
 }

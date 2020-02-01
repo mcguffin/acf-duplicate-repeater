@@ -1,6 +1,6 @@
 {
   "name": "acf-duplicate-repeater",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Duplicate Repeater and Layout Fields in ACF Pro",
   "private": true,
   "author": "mcguffin",
@@ -96,6 +96,7 @@
     ],
     "type": "plugin",
     "build": {
+      "versionedFiles": null,
       "prebuild": [
         "wp i18n make-pot . languages/acf-duplicate-repeater.pot --domain=acf-duplicate-repeater --exclude=tmp"
       ],

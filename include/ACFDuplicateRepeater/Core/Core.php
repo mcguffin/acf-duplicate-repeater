@@ -67,10 +67,10 @@ class Core extends Plugin implements CoreInterface {
 		$message = sprintf(
 			/* Translators: ACF-Pro URL */
 			__(
-				'The ACF Duplicate Repeater plugin only provides support for <a href="%s">ACF Pro 5.7</a> and up.',
+				'The ACF Duplicate Repeater plugin only provides support for <a href="%s" target="_blank" rel="noopener noreferrer">ACF Pro 5.7</a> and up.',
 				'acf-duplicate-repeater'
 			),
-			'http://www.advancedcustomfields.com/pro'
+			'https://www.advancedcustomfields.com/pro'
 		);
 		if ( class_exists( 'acf_pro' ) && version_compare( acf()->version, '5.7.0', '<' ) ) {
 			$message .= ' ' . sprintf(
@@ -85,7 +85,7 @@ class Core extends Plugin implements CoreInterface {
 			$message .= ' ' . sprintf(
 				/* Translators: Plugins page URL */
 				__(
-					'You can disable and uninstall the plugin on the <a href="%2$s">plugins page</a>.',
+					'You can disable and uninstall the plugin on the <a href="%1$s">plugins page</a>.',
 					'acf-duplicate-repeater'
 				),
 				admin_url('plugins.php' )
@@ -94,7 +94,7 @@ class Core extends Plugin implements CoreInterface {
 		?>
 		<div class="notice notice-error is-dismissible">
 			<p>
-				<?php echo $message; ?>
+				<?php echo wp_kses( $message, [ 'a' => [ 'rel' => [], 'href' => [], 'target' => [] ] ] ); ?>
 			</p>
 		</div>
 		<?php

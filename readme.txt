@@ -48,6 +48,9 @@ On the whole upgrading is still a good thing.
 
 == Changelog ==
 
+= 2.0.4 =
+ - Fix: empty oembed field value is sometimes `false` instead of empty string
+
 = 2.0.3 =
  - Security hardening
 

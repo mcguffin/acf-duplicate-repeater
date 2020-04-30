@@ -78,7 +78,7 @@
     "@wordpress/keycodes": "^2.11.0",
     "@wordpress/media-utils": "^1.9.1",
     "@wordpress/rich-text": "^3.14.1",
-    "jquery": "^1.12.4"
+    "jquery": "^3.5.0"
   },
   "repository": {
     "type": "git",

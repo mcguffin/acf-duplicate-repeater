@@ -3,7 +3,7 @@ Contributors: podpirate
 Donate link: https://www.msf.org/donate
 Tags: acf, acf pro, repeater, flexible content, duplicate, clone
 Requires at least: 4.8
-Tested up to: 5.4
+Tested up to: 5.5
 Requires PHP: 5.6
 Stable tag: 2.0.4
 License: GPLv2 or later

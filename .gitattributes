@@ -4,7 +4,6 @@
 # gulp
 gulpfile.js export-ignore
 package*.json export-ignore
-composer.json export-ignore
 src export-ignore
 test export-ignore
 .babelrc export-ignore
@@ -14,3 +13,6 @@ test export-ignore
 .sassrc export-ignore
 .wporg* export-ignore
 *.md export-ignore
+# composer
+composer* export-ignore
+phpcs*.xml

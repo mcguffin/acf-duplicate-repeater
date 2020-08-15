@@ -5,7 +5,7 @@ Plugin Name: ACF Duplicate Repeater
 Plugin URI: https://github.com/mcguffin/acf-duplicate-repeater
 Description: Duplicate Repeater and Layout Fields in ACF Pro
 Author: Jörn Lund
-Version: 2.0.4
+Version: 2.0.5
 Author URI: https://github.com/mcguffin
 License: GPL3
 Text Domain: acf-duplicate-repeater

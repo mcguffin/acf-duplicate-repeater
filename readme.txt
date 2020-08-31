@@ -13,6 +13,12 @@ Duplicate Repeater and Layout Fields in ACF Pro.
 
 == Description ==
 
+<div class="plugin-notice notice notice-warning notice-alt">
+
+ACF Pro 5.9 comes with a duplicate row feature on its own. The “ACF Duplicate Repeater” plugin is no longer maintained.
+
+</div>
+
 Duplicate Repeater and Layout Fields in ACF Pro.
 
 Supports all ACF Native fields.
@@ -47,6 +53,9 @@ Please post an issue in the [GitHub-Repository](https://github.com/mcguffin/acf-
 On the whole upgrading is still a good thing.
 
 == Changelog ==
+
+= 2.0.6 =
+ - Non-Feature: Show deprecation message with ACF Pro 5.9+
 
 = 2.0.5 =
  - Feature: Insert duplicated item after the original

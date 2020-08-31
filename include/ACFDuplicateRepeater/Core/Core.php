@@ -46,7 +46,12 @@ class Core extends Plugin implements CoreInterface {
 	 */
 	public function setup() {
 
-		if ( class_exists( 'acf_pro' ) && version_compare( acf()->version, '5.7.0', '>=' ) ) {
+		if ( class_exists( 'acf_pro' ) && version_compare( acf()->version, '5.9.0', '>=' ) ) {
+
+			// say something about incompatibility
+			add_action( 'admin_notices', [ $this, 'print_deprecation_notice' ] );
+
+		} else if ( class_exists( 'acf_pro' ) && version_compare( acf()->version, '5.7.0', '>=' ) ) {
 
 			// enqueue assets
 			add_action( 'acf/input/admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
@@ -99,6 +104,37 @@ class Core extends Plugin implements CoreInterface {
 		</div>
 		<?php
 	}
+
+
+	/**
+	 * @action admin_notices
+	 */
+	function print_deprecation_notice() {
+		$message = __(
+			'ACF Pro 5.9 comes with a duplicate row feature on its own. You don‘t need the “ACF Duplicate Repeater” any more.',
+			'acf-duplicate-repeater'
+		);
+		if ( current_user_can( 'install_plugins' ) ) {
+			$message .= ' ' . sprintf(
+				/* Translators: Plugins page URL */
+				__(
+					'You can disable and uninstall the plugin on the <a href="%1$s">plugins page</a>.',
+					'acf-duplicate-repeater'
+				),
+				admin_url( 'plugins.php' )
+			);
+		}
+		?>
+		<div class="notice notice-error">
+			<p>
+				<strong><?php esc_html_e( 'A notice from the ACF Duplicate Repeater plugin:', 'acf-duplicate-repeater' ); ?></strong>
+				<?php echo wp_kses( $message, [ 'a' => [ 'rel' => [], 'href' => [], 'target' => [] ] ] ); ?>
+			</p>
+		</div>
+		<?php
+
+	}
+
 
 	/**
 	 *	Load frontend styles and scripts

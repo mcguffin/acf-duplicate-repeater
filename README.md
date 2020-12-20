@@ -1,5 +1,7 @@
-ACF Duplicate Repeater
-======================
+Obsolete: ACF Duplicate Repeater
+================================
+
+**ACF 5.9 comes with it‘s own duplicate repeater Feature.** This repository is kept for historical reason.
 
 This is the official github repository of the [ACF Duplicate Repeater](https://wordpress.org/plugins/acf-duplicate-repeater/) plugin.
 
